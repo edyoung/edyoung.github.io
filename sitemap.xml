@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  
+  <url>
+    <loc>/categories/azure/</loc>
+    <lastmod>2020-09-07T18:11:06-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/categories/bash/</loc>
+    <lastmod>2020-09-07T18:11:06-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/blog/</loc>
+    <lastmod>2020-09-07T18:11:06-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/categories/</loc>
+    <lastmod>2020-09-07T18:11:06-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/categories/cloudshell/</loc>
+    <lastmod>2020-09-07T18:11:06-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/blog/cloud_shell_history/</loc>
+    <lastmod>2020-09-07T18:11:06-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/</loc>
+    <lastmod>2020-09-07T18:11:06-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/categories/powershell/</loc>
+    <lastmod>2020-09-07T18:11:06-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/azcli/</loc>
+    <lastmod>2020-09-07T17:11:06-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/categories/azcli/</loc>
+    <lastmod>2020-09-07T17:11:06-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/azure/</loc>
+    <lastmod>2020-09-07T17:11:06-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/powershell/</loc>
+    <lastmod>2020-09-07T17:11:06-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/</loc>
+    <lastmod>2020-09-07T17:11:06-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/tip/</loc>
+    <lastmod>2020-09-07T17:11:06-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/blog/azcli_and_azurepowershell_context/</loc>
+    <lastmod>2020-09-07T17:11:06-07:00</lastmod>
+  </url>
+  
+</urlset>

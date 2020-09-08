@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Edwin Young</title>
+    <link>/</link>
+    <description>Recent content on Edwin Young</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 07 Sep 2020 18:11:06 -0700</lastBuildDate>
+    
+	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Does Azure Cloud Shell store my command history?</title>
+      <link>/blog/cloud_shell_history/</link>
+      <pubDate>Mon, 07 Sep 2020 18:11:06 -0700</pubDate>
+      
+      <guid>/blog/cloud_shell_history/</guid>
+      <description>A few people have asked &amp;ldquo;Hey, uh, hypothetically, if I had typed a password or a secret at the Cloud Shell prompt, did you store it, and how would I delete it? Obviously I would never do this, asking for a friend.&amp;quot;
+Relax, we&amp;rsquo;ve all done it. And the answer is &amp;ldquo;Sort of&amp;rdquo;.
+In more detail, Cloud Shell itself does not store your history itself. But the shell you are running inside it does, unless you have configured something specially.</description>
+    </item>
+    
+    <item>
+      <title>What&#39;s the difference between az account show and Get-AzContext?</title>
+      <link>/blog/azcli_and_azurepowershell_context/</link>
+      <pubDate>Mon, 07 Sep 2020 17:11:06 -0700</pubDate>
+      
+      <guid>/blog/azcli_and_azurepowershell_context/</guid>
+      <description>One issue which can trip you up when using command-line tools to configure Azure is a confusing lack of interaction between Azure CLI and Azure PowerShell. They both provide a &amp;ldquo;context&amp;rdquo; so you don&amp;rsquo;t have to keep specifying the subscription over and over. But Azure CLI (the az command) has a separate context from Azure PowerShell. You can see this by running
+az account show # show azure CLI context Get-AzContext # show azure Powershell context az account set --subscription &#39;mysub2&#39; # change Azure CLI context az account show # azure CLI has changed Get-AzContext # Azure PowerShell has not!</description>
+    </item>
+    
+  </channel>
+</rss>
