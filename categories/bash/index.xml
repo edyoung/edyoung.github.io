@@ -6,10 +6,20 @@
     <description>Recent content in bash on Edwin Young</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 07 Sep 2020 18:11:06 -0700</lastBuildDate>
+    <lastBuildDate>Mon, 21 Sep 2020 18:11:06 -0700</lastBuildDate>
     
 	<atom:link href="/categories/bash/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>How to install your own versions of tools in Azure Cloud Shell</title>
+      <link>/blog/install_tools_locally/</link>
+      <pubDate>Mon, 21 Sep 2020 18:11:06 -0700</pubDate>
+      
+      <guid>/blog/install_tools_locally/</guid>
+      <description>Cloud Shell comes with a lot of tools, and we try to keep them up to date. But sometimes you need something a little bit more cutting edge or unusual. How do you install it?
+Using Cloud Shell is a little different from running your own Linux computer, but it&amp;rsquo;s a lot like using a multi-user Unix system. The main difference is you are not root and we won&amp;rsquo;t tell you the root password (sorry).</description>
+    </item>
     
     <item>
       <title>Does Azure Cloud Shell store my command history?</title>
@@ -19,7 +29,7 @@
       <guid>/blog/cloud_shell_history/</guid>
       <description>A few people have asked &amp;ldquo;Hey, uh, hypothetically, if I had typed a password or a secret at the Cloud Shell prompt, did you store it, and how would I delete it? Obviously I would never do this, asking for a friend.&amp;quot;
 Relax, we&amp;rsquo;ve all done it. And the answer is &amp;ldquo;Sort of&amp;rdquo;.
-In more detail, Cloud Shell itself does not store your history itself. But the shell you are running inside it does, unless you have configured something specially.</description>
+In more detail, Cloud Shell does not store your history itself. But the shell you are running inside it does, unless you have configured something specially.</description>
     </item>
     
   </channel>

@@ -24,7 +24,7 @@
         "datePublished": "2020-09-07 18:11:06 -0700 PDT",
         "dateModified" : "2020-09-07 18:11:06 -0700 PDT",
         "url" : "\/blog\/cloud_shell_history\/",
-        "wordCount" : "288",
+        "wordCount" : "287",
         "keywords" : [ "Blog" ]
     }
     </script>
@@ -83,7 +83,7 @@
 <meta itemprop="description" content="Describes history storage for Cloud Shell, PowerShell and Bash">
 <meta itemprop="datePublished" content="2020-09-07T18:11:06-07:00" />
 <meta itemprop="dateModified" content="2020-09-07T18:11:06-07:00" />
-<meta itemprop="wordCount" content="288">
+<meta itemprop="wordCount" content="287">
 
 
 
@@ -244,6 +244,18 @@
                     
                 
 
+                
+                        <article class="mini-post">
+                            <header>
+                                <h3><a href="/blog/install_tools_locally/">How to install your own versions of tools in Azure Cloud Shell</a></h3>
+                                
+                                <time class="published" datetime=
+                                    '2020-09-21'>
+                                    September 21, 2020</time>
+                            </header>
+                            
+
+                        </article>
                 
                         <article class="mini-post">
                             <header>
@@ -408,7 +420,7 @@
   <div id="content">
     <p>A few people have asked <em>&ldquo;Hey, uh, hypothetically, if I had typed a password or a secret at the Cloud Shell prompt, did you store it, and how would I delete it? Obviously I would never do this, asking for a friend.&quot;</em></p>
 <p>Relax, we&rsquo;ve all done it. And the answer is &ldquo;Sort of&rdquo;.</p>
-<p>In more detail, Cloud Shell itself does not store your history itself. But the shell you are running inside it does, unless you have configured something specially. The details depend on the shell. Since the shell doesn&rsquo;t know what is a password and what is not, it <em>will</em> store secrets if you type them directly at the command-line.</p>
+<p>In more detail, Cloud Shell does not store your history itself. But the shell you are running inside it does, unless you have configured something specially. The details depend on the shell. Since the shell doesn&rsquo;t know what is a password and what is not, it <em>will</em> store secrets if you type them directly at the command-line.</p>
 <h1 id="bash">Bash</h1>
 <p>Bash stores the commands you type in <code>~/.bash_history</code>. This gets saved when you exit the shell.</p>
 <h1 id="powershell">PowerShell</h1>
@@ -463,6 +475,9 @@ You can adjust the location and behavior with <a href="https://docs.microsoft.co
                 class="button big previous">What&#39;s the difference between az account show and Get-AzContext?</a></li>
     
 
+    
+        <li><a href="/blog/install_tools_locally/"
+                class="button big next">How to install your own versions of tools in Azure Cloud Shell</a></li>
     
 </ul>
 
@@ -577,6 +592,20 @@ You can adjust the location and behavior with <a href="https://docs.microsoft.co
           <article class="mini-post">
             <header>
               <h3>
+                <a href="/blog/install_tools_locally/">How to install your own versions of tools in Azure Cloud Shell</a>
+              </h3>
+              
+              <time class="published" datetime='2020-09-21'>
+                September 21, 2020
+              </time>
+            </header>
+            
+
+          </article>
+        
+          <article class="mini-post">
+            <header>
+              <h3>
                 <a href="/blog/cloud_shell_history/">Does Azure Cloud Shell store my command history?</a>
               </h3>
               
@@ -629,7 +658,7 @@ You can adjust the location and behavior with <a href="https://docs.microsoft.co
             <header>
               
                 <a href="/categories/azure/">azure</a>
-                <span style="float:right;">2</span>
+                <span style="float:right;">3</span>
               
             </header>
           </article>
@@ -640,6 +669,28 @@ You can adjust the location and behavior with <a href="https://docs.microsoft.co
             <header>
               
                 <a href="/categories/powershell/">powershell</a>
+                <span style="float:right;">3</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/bash/">bash</a>
+                <span style="float:right;">2</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/cloudshell/">cloudshell</a>
                 <span style="float:right;">2</span>
               
             </header>
@@ -651,28 +702,6 @@ You can adjust the location and behavior with <a href="https://docs.microsoft.co
             <header>
               
                 <a href="/categories/azcli/">azcli</a>
-                <span style="float:right;">1</span>
-              
-            </header>
-          </article>
-        </p>
-        
-        <p>
-          <article>
-            <header>
-              
-                <a href="/categories/bash/">bash</a>
-                <span style="float:right;">1</span>
-              
-            </header>
-          </article>
-        </p>
-        
-        <p>
-          <article>
-            <header>
-              
-                <a href="/categories/cloudshell/">cloudshell</a>
                 <span style="float:right;">1</span>
               
             </header>
