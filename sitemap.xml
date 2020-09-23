@@ -63,6 +63,21 @@
   </url>
   
   <url>
+    <loc>/blog/arc_cheat_sheet/</loc>
+    <lastmod>2020-09-07T17:11:06-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/azurearc/</loc>
+    <lastmod>2020-09-07T17:11:06-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/categories/azurearc/</loc>
+    <lastmod>2020-09-07T17:11:06-07:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/tags/powershell/</loc>
     <lastmod>2020-09-07T17:11:06-07:00</lastmod>
   </url>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>AzureArc on Edwin Young</title>
+    <link>/tags/azurearc/</link>
+    <description>Recent content in AzureArc on Edwin Young</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 07 Sep 2020 17:11:06 -0700</lastBuildDate>
+    
+	<atom:link href="/tags/azurearc/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Azure Arc command-line tools cheat sheet</title>
+      <link>/blog/arc_cheat_sheet/</link>
+      <pubDate>Mon, 07 Sep 2020 17:11:06 -0700</pubDate>
+      
+      <guid>/blog/arc_cheat_sheet/</guid>
+      <description>Arc for Servers has a new Azure CLI extension and PowerShell module. Both are still experimental, so expect a few rough edges and please report any issues you see. Because they are prerelease, they are not included (yet) in the main releases (ie, you don&amp;rsquo;t get this just by installing az cli or the Az module). However they are already functional and useful. Here&amp;rsquo;s how to do some simple operations with each of them.</description>
+    </item>
+    
+  </channel>
+</rss>
