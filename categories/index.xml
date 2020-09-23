@@ -6,17 +6,44 @@
     <description>Recent content in Categories on Edwin Young</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 21 Sep 2020 18:11:06 -0700</lastBuildDate>
+    <lastBuildDate>Tue, 22 Sep 2020 17:11:06 -0700</lastBuildDate>
     
 	<atom:link href="/categories/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
+      <title>azcli</title>
+      <link>/categories/azcli/</link>
+      <pubDate>Tue, 22 Sep 2020 17:11:06 -0700</pubDate>
+      
+      <guid>/categories/azcli/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Azure</title>
       <link>/categories/azure/</link>
-      <pubDate>Mon, 21 Sep 2020 18:11:06 -0700</pubDate>
+      <pubDate>Tue, 22 Sep 2020 17:11:06 -0700</pubDate>
       
       <guid>/categories/azure/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>AzureArc</title>
+      <link>/categories/azurearc/</link>
+      <pubDate>Tue, 22 Sep 2020 17:11:06 -0700</pubDate>
+      
+      <guid>/categories/azurearc/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>PowerShell</title>
+      <link>/categories/powershell/</link>
+      <pubDate>Tue, 22 Sep 2020 17:11:06 -0700</pubDate>
+      
+      <guid>/categories/powershell/</guid>
       <description></description>
     </item>
     
@@ -35,33 +62,6 @@
       <pubDate>Mon, 21 Sep 2020 18:11:06 -0700</pubDate>
       
       <guid>/categories/cloudshell/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>PowerShell</title>
-      <link>/categories/powershell/</link>
-      <pubDate>Mon, 21 Sep 2020 18:11:06 -0700</pubDate>
-      
-      <guid>/categories/powershell/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>azcli</title>
-      <link>/categories/azcli/</link>
-      <pubDate>Mon, 07 Sep 2020 17:11:06 -0700</pubDate>
-      
-      <guid>/categories/azcli/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>AzureArc</title>
-      <link>/categories/azurearc/</link>
-      <pubDate>Mon, 07 Sep 2020 17:11:06 -0700</pubDate>
-      
-      <guid>/categories/azurearc/</guid>
       <description></description>
     </item>
     
