@@ -6,7 +6,7 @@
     <description>Recent content in CloudShell on Edwin Young</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 27 Jan 2021 18:11:06 -0700</lastBuildDate>
+    <lastBuildDate>Fri, 19 Mar 2021 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/categories/cloudshell/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,11 +14,11 @@
     <item>
       <title>Azure Cloud Shell, az login, and Managed Identity</title>
       <link>/blog/cloud_shell_auth/</link>
-      <pubDate>Wed, 27 Jan 2021 18:11:06 -0700</pubDate>
+      <pubDate>Fri, 19 Mar 2021 00:00:00 +0000</pubDate>
       
       <guid>/blog/cloud_shell_auth/</guid>
       <description>When you open Azure Cloud Shell and run Get-AzVM or az vm list for the first time, it works right away. But why?
-That may seem like an odd question. But it doesn&amp;rsquo;t work quite the same way when you run PowerShell or Azure CLI locally - you need to run Connect-AzAccount or az login first. So what&amp;rsquo;s the difference?
+That may seem like an odd question. Of course it should work right away! But it doesn&amp;rsquo;t work quite the same way when you run PowerShell or Azure CLI locally - you need to run Connect-AzAccount or az login first. So what&amp;rsquo;s the difference?
 A surprising amount of things are happening behind the scenes for this to work, and at the time of writing there are some limitations you might hit.</description>
     </item>
     

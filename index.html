@@ -21,8 +21,8 @@
         "accountablePerson" : "",
         "copyrightHolder" : "",
         "copyrightYear" : "2021",
-        "datePublished": "2021-01-27 18:11:06 -0700 -0700",
-        "dateModified" : "2021-01-27 18:11:06 -0700 -0700",
+        "datePublished": "2021-03-19 00:00:00 \x2b0000 UTC",
+        "dateModified" : "2021-03-19 00:00:00 \x2b0000 UTC",
         "url" : "\/",
         "wordCount" : "0",
         "keywords" : [ "Blog" ]
@@ -72,7 +72,7 @@
 <meta property="og:description" content="Edwin Young&#39;s blog. Azure, Cloud Shell, PowerShell, Software Engineering" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="/" />
-<meta property="og:updated_time" content="2021-01-27T18:11:06-07:00" />
+<meta property="og:updated_time" content="2021-03-19T00:00:00+00:00" />
 
         <meta property="og:image" content="//images/logo.png">
         <meta property="og:image:type" content="image/png">
@@ -242,8 +242,8 @@
                                 <h3><a href="/blog/cloud_shell_auth/">Azure Cloud Shell, az login, and Managed Identity</a></h3>
                                 
                                 <time class="published" datetime=
-                                    '2021-01-27'>
-                                    January 27, 2021</time>
+                                    '2021-03-19'>
+                                    March 19, 2021</time>
                             </header>
                             
 
@@ -329,11 +329,11 @@
         
 
         <time class="published"
-            datetime='2021-01-27'>
-            January 27, 2021</time>
+            datetime='2021-03-19'>
+            March 19, 2021</time>
         <span class="author">Edwin Young</span>
         
-            <p>2 minute read</p>
+            <p>4 minute read</p>
         
         
     </div>
@@ -346,19 +346,44 @@
 
   <div id="content">
     <p>When you open Azure Cloud Shell and run <code>Get-AzVM</code> or <code>az vm list</code> for the first time, it works right away. But why?</p>
-<p>That may seem like an odd question. But it doesn&rsquo;t work quite the same way when you run PowerShell or Azure CLI locally - you need to run <code>Connect-AzAccount</code> or <code>az login</code> first. So what&rsquo;s the difference?</p>
-<p>A surprising amount of things are happening behind the scenes for this to work, and at the time of writing there are some limitations you might hit. This post tries to explain what is going on.</p>
-<p>Within Azure, basically everything is authenticated using <strong>OAuth</strong>. That&rsquo;s a complicated beast I can&rsquo;t explain here in detail, but the important thing is that you authenticate yourself first to
-Azure Active Directory. AAD checks your password/PIN+smart card/whatever and issues</p>
-<p>In more detail, Cloud Shell does not store your history itself. But the shell you are running inside it does, unless you have configured something specially. The details depend on the shell. Since the shell doesn&rsquo;t know what is a password and what is not, it <em>will</em> store secrets if you type them directly at the command-line.</p>
-<h1 id="bash">Bash</h1>
-<p>Bash stores the commands you type in <code>~/.bash_history</code>. This gets saved when you exit the shell.</p>
-<h1 id="powershell">PowerShell</h1>
-<p>PowerShell uses a package called PSReadLine to do the command-line interaction (such as tab completion). That module, rather than PowerShell itself, stores the commands you type in <code>~/.local/share/powershell/PSReadLine/ConsoleHost_history.txt</code> by default.
-You can adjust the location and behavior with <a href="https://docs.microsoft.com/en-us/powershell/module/psreadline/set-psreadlineoption?view=powershell-7"><code>Set-PSReadLineOption</code></a>.</p>
-<h1 id="cleaning-up">Cleaning Up</h1>
-<p>Whichever shell you use, you can clear either file by deleting it. Remember that the file is usually updated at the end of a session, so you may need to exit Cloud Shell, reopen it, then delete the file to be sure you caught it.</p>
-<p>Your entire home directory (including these files) is stored in a file called <code>.cloudconsole/acc_{username}.img</code> which is kept in your Cloud Drive, which is in your own Azure subscription. You can see this by clicking &ldquo;Manage File Share&rdquo; in the Cloud Shell toolbar and opening the .cloudconsole folder in Storage Explorer. If you are feeling super paranoid you can delete the whole file, but you will of course lose everything in your home directory.</p>
+<p>That may seem like an odd question. Of course it should work right away! But it doesn&rsquo;t work quite the same way when you run PowerShell or Azure CLI locally - you need to run <code>Connect-AzAccount</code> or <code>az login</code> first. So what&rsquo;s the difference?</p>
+<p>A surprising amount of things are happening behind the scenes for this to work, and at the time of writing there are some limitations you might hit. This post tries to explain what is going on. If you just want to use Cloud Shell you don&rsquo;t really need to know any of this.</p>
+<h2 id="oauth">OAuth</h2>
+<p>Within Azure, basically everything is authenticated using <strong>OAuth</strong>. That&rsquo;s a complicated beast I can&rsquo;t explain here in detail. The docs <a href="https://docs.microsoft.com/en-us/azure/active-directory/develop/authentication-vs-authorization">here</a> provide a reasonable starting point. For our purposes, the important thing is that you authenticate yourself first to Azure Active Directory when you open the Azure Portal. AAD checks your password/PIN+smart card/whatever and issues a <strong>refresh token</strong>. This gets stored outside our scope in the browser - Cloud Shell never accesses it directly.</p>
+<p>When you need to access a particular resource, you need an <strong>access token</strong>. Given the refresh token, you ask AAD &lsquo;hey, I want to access Azure Storage, can I have a token?'. AAD then sends you a short-lived token (usually lasting 1 hour) which can then be presented to Azure Storage; storage checks the signature on the token and uses that to check if you are legit.</p>
+<p>But as I mentioned, in Cloud Shell we don&rsquo;t have your refresh token, so how does this work?</p>
+<h2 id="managed-identity">Managed Identity</h2>
+<p><strong>Managed Identity</strong> is a cool scheme invented so that code which needs to access a resource doesn&rsquo;t need to store (and worry about the security and rotation of) a password. The Azure fabric manages an identity and is configured so that any code that runs on a particular VM can ask an endpoint &ldquo;Can I have an access token?&quot;. I think of this as an ambient credential for the VM - we grant that machine access to resources and allow code running on it to get tokens without any extra hassle.</p>
+<p>This works by having a special endpoint. If you&rsquo;re on an Azure VM with a managed identity, you can run</p>
+<p><code>curl 'http://169.254.169.254/metadata/identity/oauth2/token?api-version=2018-02-01&amp;resource=https%3A%2F%2Fmanagement.azure.com%2F' -H Metadata:true</code></p>
+<p>and get a token, which is just a JSON blob looking a bit like this:</p>
+<pre><code>{
+  &quot;accessToken&quot;: &quot;eyJ0blah...&quot;,
+  &quot;expiresOn&quot;: &quot;2021-03-19 23:12:01.371124&quot;,
+  &quot;subscription&quot;: &quot;b1071e00-5da5-49c8-b902-14951e12f37a&quot;,
+  &quot;tenant&quot;: &quot;72f988bf-86f1-41af-91ab-2d7cd011db47&quot;,
+  &quot;tokenType&quot;: &quot;Bearer&quot;
+}
+</code></pre><h2 id="managed-identity-in-cloud-shell">Managed Identity in Cloud Shell</h2>
+<p>In Cloud Shell you still want an &lsquo;ambient&rsquo; identity - you don&rsquo;t want to sign on <em>again</em>. But you don&rsquo;t want a token that identifies you as the machine where Cloud Shell runs, you want one based on your own identity that you signed on to the portal with.</p>
+<p>So we provide an alternative managed identity endpoint.</p>
+<p><code>curl 'http://localhost:50342/metadata/identity/oauth2/token?api-version=2018-02-01&amp;resource=https%3A%2F%2Fmanagement.azure.com%2F' -H Metadata:true</code></p>
+<p>Will give you an access token based on your own identity. Unlike Azure&rsquo;s regular managed identity endpoint, this is implemented as another process running inside your container. When it gets a request,
+it actually sends the request back to your browser, which forwards it to the parent Portal frame, which makes a request to AAD, and the resulting token flows back down the same path.</p>
+<h2 id="tool-considerations">Tool Considerations</h2>
+<p>Client tools deal with this endpoint in different ways.</p>
+<p>Azure PowerShell supports <code>Connect-AzAccount -Identity</code> which tells it to use managed identity (whether Cloud Shell or regular); AZ CLI has <code>az login --identity</code> for the same purpose. We run both during the Cloud Shell startup so you don&rsquo;t have to.</p>
+<p>You can also login explicitly, by running <code>az login</code> or <code>Connect-AzAccount</code>. That overrides this mechanism and can be used to (for example) use a different identity than the one you logged on to Cloud Shell with.</p>
+<h2 id="limitations-and-issues">Limitations and Issues</h2>
+<p>This works great most of the time, but there are a couple of snags you might run into.</p>
+<ol>
+<li>
+<p>We have an allow-list of resources that we can provide tokens for (a limitation we hope to raise in future). This means that when someone introduces a brand new resource type for a new service, we have to update the list in Cloud Shell too. If you run a command and see something like this: <code>&quot;error&quot;:{&quot;code&quot;:&quot;AudienceNotSupported&quot;,&quot;message&quot;:&quot;Audience https://coolnewservice.azure.com/ is not a supported MSI token audience....&quot;}&quot;</code> you have hit this issue. Please feel free to file an issue at <a href="https://github.com/Azure/CloudShell/issues">https://github.com/Azure/CloudShell/issues</a> and we&rsquo;ll endeavor to add it as soon as we can.</p>
+</li>
+<li>
+<p>If you login explicitly (<code>az login</code>) any Conditional Access rules your company may have in place will be evaluated based on the Cloud Shell container rather than the machine where your browser runs. The Cloud Shell container doesn&rsquo;t count as a managed device for these policies so rights may be limited by the policy.</p>
+</li>
+</ol>
 
   </div>
 
@@ -611,8 +636,8 @@ You can adjust the location and behavior with <a href="https://docs.microsoft.co
                 <a href="/blog/cloud_shell_auth/">Azure Cloud Shell, az login, and Managed Identity</a>
               </h3>
               
-              <time class="published" datetime='2021-01-27'>
-                January 27, 2021
+              <time class="published" datetime='2021-03-19'>
+                March 19, 2021
               </time>
             </header>
             
