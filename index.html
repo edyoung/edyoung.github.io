@@ -20,9 +20,9 @@
         "publisher": "",
         "accountablePerson" : "",
         "copyrightHolder" : "",
-        "copyrightYear" : "2020",
-        "datePublished": "2020-09-22 17:11:06 -0700 PDT",
-        "dateModified" : "2020-09-22 17:11:06 -0700 PDT",
+        "copyrightYear" : "2021",
+        "datePublished": "2021-01-27 18:11:06 -0700 -0700",
+        "dateModified" : "2021-01-27 18:11:06 -0700 -0700",
         "url" : "\/",
         "wordCount" : "0",
         "keywords" : [ "Blog" ]
@@ -72,7 +72,7 @@
 <meta property="og:description" content="Edwin Young&#39;s blog. Azure, Cloud Shell, PowerShell, Software Engineering" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="/" />
-<meta property="og:updated_time" content="2020-09-22T17:11:06-07:00" />
+<meta property="og:updated_time" content="2021-01-27T18:11:06-07:00" />
 
         <meta property="og:image" content="//images/logo.png">
         <meta property="og:image:type" content="image/png">
@@ -239,6 +239,18 @@
                 
                         <article class="mini-post">
                             <header>
+                                <h3><a href="/blog/cloud_shell_auth/">Azure Cloud Shell, az login, and Managed Identity</a></h3>
+                                
+                                <time class="published" datetime=
+                                    '2021-01-27'>
+                                    January 27, 2021</time>
+                            </header>
+                            
+
+                        </article>
+                
+                        <article class="mini-post">
+                            <header>
                                 <h3><a href="/blog/arc_cheat_sheet/">Azure Arc command-line tools cheat sheet</a></h3>
                                 
                                 <time class="published" datetime=
@@ -287,6 +299,12 @@
                 
 
                 
+                    <a href=
+                        
+                            /blog/
+                        
+                        class="button">View more posts</a>
+                
             </div>
         </section>
 
@@ -301,18 +319,18 @@
   <header>
     <div class="title">
         
-            <h2><a href="/blog/arc_cheat_sheet/">Azure Arc command-line tools cheat sheet</a></h2>
+            <h2><a href="/blog/cloud_shell_auth/">Azure Cloud Shell, az login, and Managed Identity</a></h2>
         
         
-            <p>Examples of how to do basic things using the az cli and Azure PowerShell modules for Azure Arc for Servers</p>
+            <p>Describes how authentication works inside Azure Cloud Shell</p>
         
     </div>
     <div class="meta">
         
 
         <time class="published"
-            datetime='2020-09-22'>
-            September 22, 2020</time>
+            datetime='2021-01-27'>
+            January 27, 2021</time>
         <span class="author">Edwin Young</span>
         
             <p>2 minute read</p>
@@ -327,41 +345,21 @@
   
 
   <div id="content">
-    <p>Arc for Servers has a new Azure CLI extension and PowerShell module. Both are still experimental, so expect a few rough edges and please report any issues you see. Because they are prerelease, they are not included (yet) in the main releases (ie, you don&rsquo;t get this just by installing az cli or the Az module).
-However they are already functional and useful. Here&rsquo;s how to do some simple operations with each of them.</p>
-<h1 id="install">Install</h1>
-<p>AZ CLI:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">az extension add connectedmachine
-</code></pre></div><p>Azure PowerShell:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">Install-Module -Name Az.ConnectedMachine
-</code></pre></div><h2 id="list-machines">List machines</h2>
-<p>AZ CLI</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">az connectedmachine machine list
+    <p>When you open Azure Cloud Shell and run <code>Get-AzVM</code> or <code>az vm list</code> for the first time, it works right away. But why?</p>
+<p>That may seem like an odd question. But it doesn&rsquo;t work quite the same way when you run PowerShell or Azure CLI locally - you need to run <code>Connect-AzAccount</code> or <code>az login</code> first. So what&rsquo;s the difference?</p>
+<p>A surprising amount of things are happening behind the scenes for this to work, and at the time of writing there are some limitations you might hit. This post tries to explain what is going on.</p>
+<p>Within Azure, basically everything is authenticated using <strong>OAuth</strong>. That&rsquo;s a complicated beast I can&rsquo;t explain here in detail, but the important thing is that you authenticate yourself first to
+Azure Active Directory. AAD checks your password/PIN+smart card/whatever and issues</p>
+<p>In more detail, Cloud Shell does not store your history itself. But the shell you are running inside it does, unless you have configured something specially. The details depend on the shell. Since the shell doesn&rsquo;t know what is a password and what is not, it <em>will</em> store secrets if you type them directly at the command-line.</p>
+<h1 id="bash">Bash</h1>
+<p>Bash stores the commands you type in <code>~/.bash_history</code>. This gets saved when you exit the shell.</p>
+<h1 id="powershell">PowerShell</h1>
+<p>PowerShell uses a package called PSReadLine to do the command-line interaction (such as tab completion). That module, rather than PowerShell itself, stores the commands you type in <code>~/.local/share/powershell/PSReadLine/ConsoleHost_history.txt</code> by default.
+You can adjust the location and behavior with <a href="https://docs.microsoft.com/en-us/powershell/module/psreadline/set-psreadlineoption?view=powershell-7"><code>Set-PSReadLineOption</code></a>.</p>
+<h1 id="cleaning-up">Cleaning Up</h1>
+<p>Whichever shell you use, you can clear either file by deleting it. Remember that the file is usually updated at the end of a session, so you may need to exit Cloud Shell, reopen it, then delete the file to be sure you caught it.</p>
+<p>Your entire home directory (including these files) is stored in a file called <code>.cloudconsole/acc_{username}.img</code> which is kept in your Cloud Drive, which is in your own Azure subscription. You can see this by clicking &ldquo;Manage File Share&rdquo; in the Cloud Shell toolbar and opening the .cloudconsole folder in Storage Explorer. If you are feeling super paranoid you can delete the whole file, but you will of course lose everything in your home directory.</p>
 
-<span style="color:#75715e"># only display a few properties in a convenient form</span>
-az connectedmachine machine list --query <span style="color:#e6db74">&#34;[].{Name:name,ResourceGroup:resourceGroup,Location:location,Status:status}&#34;</span> -o table
-</code></pre></div><p>Azure PowerShell:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">Get-AzConnectedMachine
-</code></pre></div><h2 id="list-extensions-installed-on-a-machine">List extensions installed on a machine</h2>
-<p>AZ CLI</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">az connectedmachine machine-extension list --resource-group edyoung --machine-name edwin-virtual-machine
-</code></pre></div><p>Azure PowerShell:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">Get-AzConnectedMachineExtension -ResourceGroupName edyoung -MachineName edwin-virtual-machine
-</code></pre></div><h2 id="install-custom-script-extension-on-a-windows-machine-and-run-dir">Install Custom Script Extension on a windows machine and run &lsquo;dir&rsquo;</h2>
-<p>Note that installing extensions currently takes several minutes. Please be patient.</p>
-<p>AZ CLI run in bash</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># Note --location needs to be the location of the machine</span>
-az connectedmachine machine-extension create --machine-name silverbox-ne --resource-group edyoung --name myext --type <span style="color:#e6db74">&#34;CustomScriptExtension&#34;</span> --publisher <span style="color:#e6db74">&#34;Microsoft.Compute&#34;</span> --settings <span style="color:#e6db74">&#39;{&#34;commandToExecute&#34;:&#34;dir&#34;}&#39;</span> --location <span style="color:#e6db74">&#34;North Europe&#34;</span>
-</code></pre></div><p>AZ CLI run inside PowerShell (the escaping is different for settings param)</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">az connectedmachine machine-extension create --machine-name silverbox<span style="color:#f92672">-ne</span> --resource-group edyoung --name myext --type <span style="color:#e6db74">&#34;CustomScriptExtension&#34;</span> --publisher <span style="color:#e6db74">&#34;Microsoft.Compute&#34;</span> --settings <span style="color:#e6db74">&#39;{\&#34;commandToExecute\&#34;:\&#34;dir\&#34;}&#39;</span> --location <span style="color:#e6db74">&#34;North Europe&#34;</span>
-</code></pre></div><p>Azure PowerShell</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell"> New-AzConnectedMachineExtension -MachineName silverbox<span style="color:#f92672">-ne</span> -ResourceGroupName edyoung -Location <span style="color:#e6db74">&#34;North Europe&#34;</span> -Name myext -Setting <span style="color:#e6db74">&#39;{&#34;commandToExecute&#34;:&#34;dir&#34;}&#39;</span> -ExtensionType CustomScriptExtension -Publisher Microsoft.Compute
-</code></pre></div><h2 id="delete-an-extension">Delete an extension</h2>
-<p>AZ CLI</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">az connectedmachine machine-extension delete --name myext -g edyoung --machine-name silverbox-ne
-</code></pre></div><p>Azure PowerShell</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">Remove-AzConnectedMachineExtension -MachineName silverbox<span style="color:#f92672">-ne</span> -ResourceGroupName edyoung -Name myext
-</code></pre></div>
   </div>
 
   <footer>
@@ -374,13 +372,10 @@ az connectedmachine machine-extension create --machine-name silverbox-ne --resou
                 <i class="fa fa-folder"></i>
                 
                 
-                <li><a class="article-category-link" href="/categories/azurearc">AzureArc</a></li>
+                <li><a class="article-category-link" href="/categories/azure">Azure</a></li>
                 
                 
-                <li><a class="article-category-link" href="/categories/azcli">azcli</a></li>
-                
-                
-                <li><a class="article-category-link" href="/categories/powershell">PowerShell</a></li>
+                <li><a class="article-category-link" href="/categories/cloudshell">CloudShell</a></li>
                 
             
         
@@ -388,24 +383,6 @@ az connectedmachine machine-extension create --machine-name silverbox-ne --resou
   </li>
   <li class="tags">
     <ul>
-        
-            
-            
-                <i class="fa fa-tags"></i>
-                
-                
-                <li><a class="article-category-link" href="/tags/azurearc">AzureArc</a></li>
-                
-                
-                <li><a class="article-category-link" href="/tags/azure">azure</a></li>
-                
-                
-                <li><a class="article-category-link" href="/tags/azcli">azcli</a></li>
-                
-                
-                <li><a class="article-category-link" href="/tags/powershell">PowerShell</a></li>
-                
-            
         
     </ul>
   </li>
@@ -418,8 +395,8 @@ az connectedmachine machine-extension create --machine-name silverbox-ne --resou
 
 <ul class="actions pagination">
     
-        <li><a href="/blog/install_tools_locally/"
-                class="button big previous">How to install your own versions of tools in Azure Cloud Shell</a></li>
+        <li><a href="/blog/arc_cheat_sheet/"
+                class="button big previous">Azure Arc command-line tools cheat sheet</a></li>
     
 
     
@@ -438,7 +415,7 @@ az connectedmachine machine-extension create --machine-name silverbox-ne --resou
 
 
 <li>
-  <a href="//twitter.com/share?url=%2fblog%2farc_cheat_sheet%2f&amp;text=Azure%20Arc%20command-line%20tools%20cheat%20sheet&amp;via=snuffling" target="_blank" class="share-btn twitter">
+  <a href="//twitter.com/share?url=%2fblog%2fcloud_shell_auth%2f&amp;text=Azure%20Cloud%20Shell%2c%20az%20login%2c%20and%20Managed%20Identity&amp;via=snuffling" target="_blank" class="share-btn twitter">
     <i class="fa fa-twitter"></i>
     <p>Twitter</p>
     </a>
@@ -448,7 +425,7 @@ az connectedmachine machine-extension create --machine-name silverbox-ne --resou
 
 
 <li>
-  <a href="//plus.google.com/share?url=%2fblog%2farc_cheat_sheet%2f" target="_blank" class="share-btn google-plus">
+  <a href="//plus.google.com/share?url=%2fblog%2fcloud_shell_auth%2f" target="_blank" class="share-btn google-plus">
     <i class="fa fa-google-plus"></i>
     <p>Google+</p>
   </a>
@@ -459,7 +436,7 @@ az connectedmachine machine-extension create --machine-name silverbox-ne --resou
 
 
 <li>
-  <a href="//www.facebook.com/sharer/sharer.php?u=%2fblog%2farc_cheat_sheet%2f" target="_blank" class="share-btn facebook">
+  <a href="//www.facebook.com/sharer/sharer.php?u=%2fblog%2fcloud_shell_auth%2f" target="_blank" class="share-btn facebook">
     <i class="fa fa-facebook"></i>
     <p>Facebook</p>
     </a>
@@ -469,7 +446,7 @@ az connectedmachine machine-extension create --machine-name silverbox-ne --resou
 
 
 <li>
-  <a href="//reddit.com/submit?url=%2fblog%2farc_cheat_sheet%2f&amp;title=Azure%20Arc%20command-line%20tools%20cheat%20sheet" target="_blank" class="share-btn reddit">
+  <a href="//reddit.com/submit?url=%2fblog%2fcloud_shell_auth%2f&amp;title=Azure%20Cloud%20Shell%2c%20az%20login%2c%20and%20Managed%20Identity" target="_blank" class="share-btn reddit">
     <i class="fa fa-reddit-alien"></i>
     <p>Reddit</p>
   </a>
@@ -479,7 +456,7 @@ az connectedmachine machine-extension create --machine-name silverbox-ne --resou
 
 
 <li>
-  <a href="//www.linkedin.com/shareArticle?url=%2fblog%2farc_cheat_sheet%2f&amp;title=Azure%20Arc%20command-line%20tools%20cheat%20sheet" target="_blank" class="share-btn linkedin">
+  <a href="//www.linkedin.com/shareArticle?url=%2fblog%2fcloud_shell_auth%2f&amp;title=Azure%20Cloud%20Shell%2c%20az%20login%2c%20and%20Managed%20Identity" target="_blank" class="share-btn linkedin">
       <i class="fa fa-linkedin"></i>
       <p>LinkedIn</p>
     </a>
@@ -489,7 +466,7 @@ az connectedmachine machine-extension create --machine-name silverbox-ne --resou
 
 
 <li>
-  <a href="//www.stumbleupon.com/submit?url=%2fblog%2farc_cheat_sheet%2f&amp;title=Azure%20Arc%20command-line%20tools%20cheat%20sheet" target="_blank" class="share-btn stumbleupon">
+  <a href="//www.stumbleupon.com/submit?url=%2fblog%2fcloud_shell_auth%2f&amp;title=Azure%20Cloud%20Shell%2c%20az%20login%2c%20and%20Managed%20Identity" target="_blank" class="share-btn stumbleupon">
     <i class="fa fa-stumbleupon"></i>
     <p>StumbleUpon</p>
   </a>
@@ -499,7 +476,7 @@ az connectedmachine machine-extension create --machine-name silverbox-ne --resou
 
 
 <li>
-  <a href="//www.pinterest.com/pin/create/button/?url=%2fblog%2farc_cheat_sheet%2f&amp;description=Azure%20Arc%20command-line%20tools%20cheat%20sheet" target="_blank" class="share-btn pinterest">
+  <a href="//www.pinterest.com/pin/create/button/?url=%2fblog%2fcloud_shell_auth%2f&amp;description=Azure%20Cloud%20Shell%2c%20az%20login%2c%20and%20Managed%20Identity" target="_blank" class="share-btn pinterest">
     <i class="fa fa-pinterest-p"></i>
     <p>Pinterest</p>
   </a>
@@ -509,7 +486,7 @@ az connectedmachine machine-extension create --machine-name silverbox-ne --resou
 
 
 <li>
-  <a href="mailto:?subject=Check out this post by Edwin%20Young&amp;body=%2fblog%2farc_cheat_sheet%2f" target="_blank" class="share-btn email">
+  <a href="mailto:?subject=Check out this post by Edwin%20Young&amp;body=%2fblog%2fcloud_shell_auth%2f" target="_blank" class="share-btn email">
     <i class="fa fa-envelope"></i>
     <p>Email</p>
   </a>
@@ -631,6 +608,20 @@ az connectedmachine machine-extension create --machine-name silverbox-ne --resou
           <article class="mini-post">
             <header>
               <h3>
+                <a href="/blog/cloud_shell_auth/">Azure Cloud Shell, az login, and Managed Identity</a>
+              </h3>
+              
+              <time class="published" datetime='2021-01-27'>
+                January 27, 2021
+              </time>
+            </header>
+            
+
+          </article>
+        
+          <article class="mini-post">
+            <header>
+              <h3>
                 <a href="/blog/arc_cheat_sheet/">Azure Arc command-line tools cheat sheet</a>
               </h3>
               
@@ -687,6 +678,12 @@ az connectedmachine machine-extension create --machine-name silverbox-ne --resou
       </div>
 
       
+        <a href=
+          
+            /blog/
+          
+        class="button">View more posts</a>
+      
     </div>
   </section>
 
@@ -710,6 +707,17 @@ az connectedmachine machine-extension create --machine-name silverbox-ne --resou
           <article>
             <header>
               
+                <a href="/categories/azure/">azure</a>
+                <span style="float:right;">4</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
                 <a href="/categories/powershell/">powershell</a>
                 <span style="float:right;">4</span>
               
@@ -721,7 +729,7 @@ az connectedmachine machine-extension create --machine-name silverbox-ne --resou
           <article>
             <header>
               
-                <a href="/categories/azure/">azure</a>
+                <a href="/categories/cloudshell/">cloudshell</a>
                 <span style="float:right;">3</span>
               
             </header>
@@ -744,17 +752,6 @@ az connectedmachine machine-extension create --machine-name silverbox-ne --resou
             <header>
               
                 <a href="/categories/bash/">bash</a>
-                <span style="float:right;">2</span>
-              
-            </header>
-          </article>
-        </p>
-        
-        <p>
-          <article>
-            <header>
-              
-                <a href="/categories/cloudshell/">cloudshell</a>
                 <span style="float:right;">2</span>
               
             </header>
@@ -862,7 +859,7 @@ az connectedmachine machine-extension create --machine-name silverbox-ne --resou
     
     <p class="copyright">
       
-        &copy; 2020
+        &copy; 2021
         
           Edwin Young
         
