@@ -21,8 +21,8 @@
         "accountablePerson" : "",
         "copyrightHolder" : "",
         "copyrightYear" : "2021",
-        "datePublished": "2021-03-19 00:00:00 \x2b0000 UTC",
-        "dateModified" : "2021-03-19 00:00:00 \x2b0000 UTC",
+        "datePublished": "2021-05-25 00:00:00 \x2b0000 UTC",
+        "dateModified" : "2021-05-25 00:00:00 \x2b0000 UTC",
         "url" : "\/",
         "wordCount" : "0",
         "keywords" : [ "Blog" ]
@@ -72,7 +72,7 @@
 <meta property="og:description" content="Edwin Young&#39;s blog. Azure, Cloud Shell, PowerShell, Software Engineering" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="/" />
-<meta property="og:updated_time" content="2021-03-19T00:00:00+00:00" />
+<meta property="og:updated_time" content="2021-05-25T00:00:00+00:00" />
 
         <meta property="og:image" content="//images/logo.png">
         <meta property="og:image:type" content="image/png">
@@ -239,6 +239,18 @@
                 
                         <article class="mini-post">
                             <header>
+                                <h3><a href="/blog/cloud_shell_files/">How Azure Cloud Shell stores your files</a></h3>
+                                
+                                <time class="published" datetime=
+                                    '2021-05-25'>
+                                    May 25, 2021</time>
+                            </header>
+                            
+
+                        </article>
+                
+                        <article class="mini-post">
+                            <header>
                                 <h3><a href="/blog/cloud_shell_auth/">Azure Cloud Shell, az login, and Managed Identity</a></h3>
                                 
                                 <time class="published" datetime=
@@ -285,18 +297,6 @@
 
                         </article>
                 
-                        <article class="mini-post">
-                            <header>
-                                <h3><a href="/blog/azcli_and_azurepowershell_context/">What&#39;s the difference between az account show and Get-AzContext?</a></h3>
-                                
-                                <time class="published" datetime=
-                                    '2020-09-07'>
-                                    September 7, 2020</time>
-                            </header>
-                            
-
-                        </article>
-                
 
                 
                     <a href=
@@ -319,21 +319,21 @@
   <header>
     <div class="title">
         
-            <h2><a href="/blog/cloud_shell_auth/">Azure Cloud Shell, az login, and Managed Identity</a></h2>
+            <h2><a href="/blog/cloud_shell_files/">How Azure Cloud Shell stores your files</a></h2>
         
         
-            <p>Describes how authentication works inside Azure Cloud Shell</p>
+            <p>How Azure Cloud Shell stores your files</p>
         
     </div>
     <div class="meta">
         
 
         <time class="published"
-            datetime='2021-03-19'>
-            March 19, 2021</time>
+            datetime='2021-05-25'>
+            May 25, 2021</time>
         <span class="author">Edwin Young</span>
         
-            <p>4 minute read</p>
+            <p>3 minute read</p>
         
         
     </div>
@@ -345,45 +345,38 @@
   
 
   <div id="content">
-    <p>When you open Azure Cloud Shell and run <code>Get-AzVM</code> or <code>az vm list</code> for the first time, it works right away. But why?</p>
-<p>That may seem like an odd question. Of course it should work right away! But it doesn&rsquo;t work quite the same way when you run PowerShell or Azure CLI locally - you need to run <code>Connect-AzAccount</code> or <code>az login</code> first. So what&rsquo;s the difference?</p>
-<p>A surprising amount of things are happening behind the scenes for this to work, and at the time of writing there are some limitations you might hit. This post tries to explain what is going on. If you just want to use Cloud Shell you don&rsquo;t really need to know any of this.</p>
-<h2 id="oauth">OAuth</h2>
-<p>Within Azure, basically everything is authenticated using <strong>OAuth</strong>. That&rsquo;s a complicated beast I can&rsquo;t explain here in detail. The docs <a href="https://docs.microsoft.com/en-us/azure/active-directory/develop/authentication-vs-authorization">here</a> provide a reasonable starting point. For our purposes, the important thing is that you authenticate yourself first to Azure Active Directory when you open the Azure Portal. AAD checks your password/PIN+smart card/whatever and issues a <strong>refresh token</strong>. This gets stored outside our scope in the browser - Cloud Shell never accesses it directly.</p>
-<p>When you need to access a particular resource, you need an <strong>access token</strong>. Given the refresh token, you ask AAD &lsquo;hey, I want to access Azure Storage, can I have a token?'. AAD then sends you a short-lived token (usually lasting 1 hour) which can then be presented to Azure Storage; storage checks the signature on the token and uses that to check if you are legit.</p>
-<p>But as I mentioned, in Cloud Shell we don&rsquo;t have your refresh token, so how does this work?</p>
-<h2 id="managed-identity">Managed Identity</h2>
-<p><strong>Managed Identity</strong> is a cool scheme invented so that code which needs to access a resource doesn&rsquo;t need to store (and worry about the security and rotation of) a password. The Azure fabric manages an identity and is configured so that any code that runs on a particular VM can ask an endpoint &ldquo;Can I have an access token?&quot;. I think of this as an ambient credential for the VM - we grant that machine access to resources and allow code running on it to get tokens without any extra hassle.</p>
-<p>This works by having a special endpoint. If you&rsquo;re on an Azure VM with a managed identity, you can run</p>
-<p><code>curl 'http://169.254.169.254/metadata/identity/oauth2/token?api-version=2018-02-01&amp;resource=https%3A%2F%2Fmanagement.azure.com%2F' -H Metadata:true</code></p>
-<p>and get a token, which is just a JSON blob looking a bit like this:</p>
-<pre><code>{
-  &quot;accessToken&quot;: &quot;eyJ0blah...&quot;,
-  &quot;expiresOn&quot;: &quot;2021-03-19 23:12:01.371124&quot;,
-  &quot;subscription&quot;: &quot;b1071e00-5da5-49c8-b902-14951e12f37a&quot;,
-  &quot;tenant&quot;: &quot;72f988bf-86f1-41af-91ab-2d7cd011db47&quot;,
-  &quot;tokenType&quot;: &quot;Bearer&quot;
-}
-</code></pre><h2 id="managed-identity-in-cloud-shell">Managed Identity in Cloud Shell</h2>
-<p>In Cloud Shell you still want an &lsquo;ambient&rsquo; identity - you don&rsquo;t want to sign on <em>again</em>. But you don&rsquo;t want a token that identifies you as the machine where Cloud Shell runs, you want one based on your own identity that you signed on to the portal with.</p>
-<p>So we provide an alternative managed identity endpoint.</p>
-<p><code>curl 'http://localhost:50342/metadata/identity/oauth2/token?api-version=2018-02-01&amp;resource=https%3A%2F%2Fmanagement.azure.com%2F' -H Metadata:true</code></p>
-<p>Will give you an access token based on your own identity. Unlike Azure&rsquo;s regular managed identity endpoint, this is implemented as another process running inside your container. When it gets a request,
-it actually sends the request back to your browser, which forwards it to the parent Portal frame, which makes a request to AAD, and the resulting token flows back down the same path.</p>
-<h2 id="tool-considerations">Tool Considerations</h2>
-<p>Client tools deal with this endpoint in different ways.</p>
-<p>Azure PowerShell supports <code>Connect-AzAccount -Identity</code> which tells it to use managed identity (whether Cloud Shell or regular); AZ CLI has <code>az login --identity</code> for the same purpose. We run both during the Cloud Shell startup so you don&rsquo;t have to.</p>
-<p>You can also login explicitly, by running <code>az login</code> or <code>Connect-AzAccount</code>. That overrides this mechanism and can be used to (for example) use a different identity than the one you logged on to Cloud Shell with.</p>
-<h2 id="limitations-and-issues">Limitations and Issues</h2>
-<p>This works great most of the time, but there are a couple of snags you might run into.</p>
-<ol>
+    <p>The official information on Cloud Shell&rsquo;s file storage is <a href="https://docs.microsoft.com/en-us/azure/cloud-shell/persisting-shell-storage">here</a>. It&rsquo;s good stuff, and covers most things you might like to know, take a look! This blog contains a few more behind-the-scenes details for the curious. NB: We might change this in the future, this isn&rsquo;t guaranteed.</p>
+<p>We can see from the docs that all your files are stored in an Azure File Share which belongs to you, and which you select when you first start CLoud Shell. But how do those files map to the directory layout you see in Cloud Shell?</p>
+<p>You can see that there are several mount points set up:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">edwin@Azure:~$ df -H
+Filesystem                                                          Size  Used Avail Use% Mounted on
+overlay                                                              52G   17G   36G  32% /
+tmpfs                                                                68M     <span style="color:#ae81ff">0</span>   68M   0% /dev
+tmpfs                                                               2.1G     <span style="color:#ae81ff">0</span>  2.1G   0% /sys/fs/cgroup
+/dev/sda1                                                            52G   17G   36G  32% /home
+shm                                                                  68M  8.2k   68M   1% /dev/shm
+//csxxx.file.core.windows.net/cs-edyoung-microsoft-com-xxx          6.5G  5.4G  1.1G  84% /usr/csuser/clouddrive
+tmpfs                                                               2.1G     <span style="color:#ae81ff">0</span>  2.1G   0% /proc/acpi
+tmpfs                                                               2.1G     <span style="color:#ae81ff">0</span>  2.1G   0% /proc/scsi
+tmpfs                                                               2.1G     <span style="color:#ae81ff">0</span>  2.1G   0% /sys/firmware
+/dev/loop0                                                          5.3G  1.3G  3.7G  27% /home/edwin
+</code></pre></div><p>You can ignore the overlay and tmpfs stuff, which is container voodoo.</p>
+<p>The bits that matter:</p>
+<ul>
 <li>
-<p>We have an allow-list of resources that we can provide tokens for (a limitation we hope to raise in future). This means that when someone introduces a brand new resource type for a new service, we have to update the list in Cloud Shell too. If you run a command and see something like this: <code>&quot;error&quot;:{&quot;code&quot;:&quot;AudienceNotSupported&quot;,&quot;message&quot;:&quot;Audience https://coolnewservice.azure.com/ is not a supported MSI token audience....&quot;}&quot;</code> you have hit this issue. Please feel free to file an issue at <a href="https://github.com/Azure/CloudShell/issues">https://github.com/Azure/CloudShell/issues</a> and we&rsquo;ll endeavor to add it as soon as we can.</p>
+<p>Inside Cloud Shell, you have a classic Unix filesystem. Under the filesystem root <code>/</code>, most everything is owned by root, and is not writable by the Cloud Shell user. This includes all the utility programs Cloud Shell ships.
+Even if you find some way to elevate privileges and update them, all the changes will be lost the next time you run Cloud Shell, because these are part of the container image, and are recreated every time you reconnect.</p>
 </li>
 <li>
-<p>If you login explicitly (<code>az login</code>) any Conditional Access rules your company may have in place will be evaluated based on the Cloud Shell container rather than the machine where your browser runs. The Cloud Shell container doesn&rsquo;t count as a managed device for these policies so rights may be limited by the policy.</p>
+<p>There&rsquo;s also your &lsquo;cloud drive&rsquo;, which is your Azure File Share mounted as a CIFS filesystem as <code>/usr/csuser/clouddrive</code>. In this example, mine is in the file share <code>cs-edyoung-microsoft-com-xxx</code> in the storage account <code>csxxx.file.core.windows.net</code> There&rsquo;s a symlink set up so that ~/clouddrive goes to the same location. Through that you can read and write files to the Azure file share.</p>
 </li>
-</ol>
+<li>
+<p>Your home directory is different. It&rsquo;s under <code>/home/username</code> (mine is <code>/home/edwin</code> ) and is writable. You can see that is a mount point for /dev/loop0, which is a loopback filesystem. A loopback filesystem allows you to create a filesystem <em>inside a file</em>. Where is that file? Inside your cloud drive fileshare, as a regular file <code>.cloudconsole/acc_username.img</code></p>
+</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">edwin@Azure:~$ ls -l ~/clouddrive/.cloudconsole/acc_edwin.img
+-rwxrwxrwx <span style="color:#ae81ff">1</span> edwin edwin <span style="color:#ae81ff">5368709120</span> May <span style="color:#ae81ff">26</span> 06:25 /home/edwin/clouddrive/.cloudconsole/acc_edwin.img
+</code></pre></div><p>You can see this is a 5GB file. Inside that file is an entire filesystem, which contains the files which you have stored in your home directory. <strong>Don&rsquo;t delete or modify that file, or you&rsquo;ll lose whatever you have in your Cloud Shell home directory</strong>. Generally you should treat this file as opaque, but if you desperately want to you could download the file and mount it as a loopback device on a regular Linux box. If for some reason you <em>want</em> to delete everything in your home directory, you could delete that file from the file share, and when you restart Cloud Shell we will create a new home directory file for you.</p>
 
   </div>
 
@@ -420,8 +413,8 @@ it actually sends the request back to your browser, which forwards it to the par
 
 <ul class="actions pagination">
     
-        <li><a href="/blog/arc_cheat_sheet/"
-                class="button big previous">Azure Arc command-line tools cheat sheet</a></li>
+        <li><a href="/blog/cloud_shell_auth/"
+                class="button big previous">Azure Cloud Shell, az login, and Managed Identity</a></li>
     
 
     
@@ -440,7 +433,7 @@ it actually sends the request back to your browser, which forwards it to the par
 
 
 <li>
-  <a href="//twitter.com/share?url=%2fblog%2fcloud_shell_auth%2f&amp;text=Azure%20Cloud%20Shell%2c%20az%20login%2c%20and%20Managed%20Identity&amp;via=snuffling" target="_blank" class="share-btn twitter">
+  <a href="//twitter.com/share?url=%2fblog%2fcloud_shell_files%2f&amp;text=How%20Azure%20Cloud%20Shell%20stores%20your%20files&amp;via=snuffling" target="_blank" class="share-btn twitter">
     <i class="fa fa-twitter"></i>
     <p>Twitter</p>
     </a>
@@ -450,7 +443,7 @@ it actually sends the request back to your browser, which forwards it to the par
 
 
 <li>
-  <a href="//plus.google.com/share?url=%2fblog%2fcloud_shell_auth%2f" target="_blank" class="share-btn google-plus">
+  <a href="//plus.google.com/share?url=%2fblog%2fcloud_shell_files%2f" target="_blank" class="share-btn google-plus">
     <i class="fa fa-google-plus"></i>
     <p>Google+</p>
   </a>
@@ -461,7 +454,7 @@ it actually sends the request back to your browser, which forwards it to the par
 
 
 <li>
-  <a href="//www.facebook.com/sharer/sharer.php?u=%2fblog%2fcloud_shell_auth%2f" target="_blank" class="share-btn facebook">
+  <a href="//www.facebook.com/sharer/sharer.php?u=%2fblog%2fcloud_shell_files%2f" target="_blank" class="share-btn facebook">
     <i class="fa fa-facebook"></i>
     <p>Facebook</p>
     </a>
@@ -471,7 +464,7 @@ it actually sends the request back to your browser, which forwards it to the par
 
 
 <li>
-  <a href="//reddit.com/submit?url=%2fblog%2fcloud_shell_auth%2f&amp;title=Azure%20Cloud%20Shell%2c%20az%20login%2c%20and%20Managed%20Identity" target="_blank" class="share-btn reddit">
+  <a href="//reddit.com/submit?url=%2fblog%2fcloud_shell_files%2f&amp;title=How%20Azure%20Cloud%20Shell%20stores%20your%20files" target="_blank" class="share-btn reddit">
     <i class="fa fa-reddit-alien"></i>
     <p>Reddit</p>
   </a>
@@ -481,7 +474,7 @@ it actually sends the request back to your browser, which forwards it to the par
 
 
 <li>
-  <a href="//www.linkedin.com/shareArticle?url=%2fblog%2fcloud_shell_auth%2f&amp;title=Azure%20Cloud%20Shell%2c%20az%20login%2c%20and%20Managed%20Identity" target="_blank" class="share-btn linkedin">
+  <a href="//www.linkedin.com/shareArticle?url=%2fblog%2fcloud_shell_files%2f&amp;title=How%20Azure%20Cloud%20Shell%20stores%20your%20files" target="_blank" class="share-btn linkedin">
       <i class="fa fa-linkedin"></i>
       <p>LinkedIn</p>
     </a>
@@ -491,7 +484,7 @@ it actually sends the request back to your browser, which forwards it to the par
 
 
 <li>
-  <a href="//www.stumbleupon.com/submit?url=%2fblog%2fcloud_shell_auth%2f&amp;title=Azure%20Cloud%20Shell%2c%20az%20login%2c%20and%20Managed%20Identity" target="_blank" class="share-btn stumbleupon">
+  <a href="//www.stumbleupon.com/submit?url=%2fblog%2fcloud_shell_files%2f&amp;title=How%20Azure%20Cloud%20Shell%20stores%20your%20files" target="_blank" class="share-btn stumbleupon">
     <i class="fa fa-stumbleupon"></i>
     <p>StumbleUpon</p>
   </a>
@@ -501,7 +494,7 @@ it actually sends the request back to your browser, which forwards it to the par
 
 
 <li>
-  <a href="//www.pinterest.com/pin/create/button/?url=%2fblog%2fcloud_shell_auth%2f&amp;description=Azure%20Cloud%20Shell%2c%20az%20login%2c%20and%20Managed%20Identity" target="_blank" class="share-btn pinterest">
+  <a href="//www.pinterest.com/pin/create/button/?url=%2fblog%2fcloud_shell_files%2f&amp;description=How%20Azure%20Cloud%20Shell%20stores%20your%20files" target="_blank" class="share-btn pinterest">
     <i class="fa fa-pinterest-p"></i>
     <p>Pinterest</p>
   </a>
@@ -511,7 +504,7 @@ it actually sends the request back to your browser, which forwards it to the par
 
 
 <li>
-  <a href="mailto:?subject=Check out this post by Edwin%20Young&amp;body=%2fblog%2fcloud_shell_auth%2f" target="_blank" class="share-btn email">
+  <a href="mailto:?subject=Check out this post by Edwin%20Young&amp;body=%2fblog%2fcloud_shell_files%2f" target="_blank" class="share-btn email">
     <i class="fa fa-envelope"></i>
     <p>Email</p>
   </a>
@@ -633,6 +626,20 @@ it actually sends the request back to your browser, which forwards it to the par
           <article class="mini-post">
             <header>
               <h3>
+                <a href="/blog/cloud_shell_files/">How Azure Cloud Shell stores your files</a>
+              </h3>
+              
+              <time class="published" datetime='2021-05-25'>
+                May 25, 2021
+              </time>
+            </header>
+            
+
+          </article>
+        
+          <article class="mini-post">
+            <header>
+              <h3>
                 <a href="/blog/cloud_shell_auth/">Azure Cloud Shell, az login, and Managed Identity</a>
               </h3>
               
@@ -686,20 +693,6 @@ it actually sends the request back to your browser, which forwards it to the par
 
           </article>
         
-          <article class="mini-post">
-            <header>
-              <h3>
-                <a href="/blog/azcli_and_azurepowershell_context/">What&#39;s the difference between az account show and Get-AzContext?</a>
-              </h3>
-              
-              <time class="published" datetime='2020-09-07'>
-                September 7, 2020
-              </time>
-            </header>
-            
-
-          </article>
-        
       </div>
 
       
@@ -733,6 +726,17 @@ it actually sends the request back to your browser, which forwards it to the par
             <header>
               
                 <a href="/categories/azure/">azure</a>
+                <span style="float:right;">5</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/cloudshell/">cloudshell</a>
                 <span style="float:right;">4</span>
               
             </header>
@@ -745,17 +749,6 @@ it actually sends the request back to your browser, which forwards it to the par
               
                 <a href="/categories/powershell/">powershell</a>
                 <span style="float:right;">4</span>
-              
-            </header>
-          </article>
-        </p>
-        
-        <p>
-          <article>
-            <header>
-              
-                <a href="/categories/cloudshell/">cloudshell</a>
-                <span style="float:right;">3</span>
               
             </header>
           </article>

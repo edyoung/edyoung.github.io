@@ -31,8 +31,8 @@
         "accountablePerson" : "",
         "copyrightHolder" : "",
         "copyrightYear" : "2021",
-        "datePublished": "2021-03-19 00:00:00 \x2b0000 UTC",
-        "dateModified" : "2021-03-19 00:00:00 \x2b0000 UTC",
+        "datePublished": "2021-05-25 00:00:00 \x2b0000 UTC",
+        "dateModified" : "2021-05-25 00:00:00 \x2b0000 UTC",
         "url" : "\/categories\/cloudshell\/",
         "wordCount" : "0",
         "keywords" : [ "Blog" ]
@@ -80,7 +80,7 @@
 <meta property="og:description" content="Edwin Young&#39;s blog. Azure, Cloud Shell, PowerShell, Software Engineering" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="/categories/cloudshell/" />
-<meta property="og:updated_time" content="2021-03-19T00:00:00+00:00" />
+<meta property="og:updated_time" content="2021-05-25T00:00:00+00:00" />
 
         <meta property="og:image" content="//images/logo.png">
         <meta property="og:image:type" content="image/png">
@@ -242,6 +242,18 @@
                 
                         <article class="mini-post">
                             <header>
+                                <h3><a href="/blog/cloud_shell_files/">How Azure Cloud Shell stores your files</a></h3>
+                                
+                                <time class="published" datetime=
+                                    '2021-05-25'>
+                                    May 25, 2021</time>
+                            </header>
+                            
+
+                        </article>
+                
+                        <article class="mini-post">
+                            <header>
                                 <h3><a href="/blog/cloud_shell_auth/">Azure Cloud Shell, az login, and Managed Identity</a></h3>
                                 
                                 <time class="published" datetime=
@@ -288,18 +300,6 @@
 
                         </article>
                 
-                        <article class="mini-post">
-                            <header>
-                                <h3><a href="/blog/azcli_and_azurepowershell_context/">What&#39;s the difference between az account show and Get-AzContext?</a></h3>
-                                
-                                <time class="published" datetime=
-                                    '2020-09-07'>
-                                    September 7, 2020</time>
-                            </header>
-                            
-
-                        </article>
-                
 
                 
                     <a href=
@@ -319,6 +319,67 @@
     <div id="main">
         <h1>CloudShell</h1>
         
+        
+            <article class="post">
+  <header>
+    <div class="title">
+        
+            <h2><a href="/blog/cloud_shell_files/">How Azure Cloud Shell stores your files</a></h2>
+        
+        
+            <p>How Azure Cloud Shell stores your files</p>
+        
+    </div>
+    <div class="meta">
+        
+
+        <time class="published"
+            datetime='2021-05-25'>
+            May 25, 2021</time>
+        <span class="author">Edwin Young</span>
+        
+            <p>3 minute read</p>
+        
+        
+    </div>
+</header>
+
+  
+
+  
+  <p>The official information on Cloud Shell&rsquo;s file storage is <a href="https://docs.microsoft.com/en-us/azure/cloud-shell/persisting-shell-storage">here</a>. It&rsquo;s good stuff, and covers most things you might like to know, take a look! This blog contains a few more behind-the-scenes details for the curious. NB: We might change this in the future, this isn&rsquo;t guaranteed.</p>
+  <footer>
+    <ul class="actions">
+      <li><a href="/blog/cloud_shell_files/" class="button big">Continue Reading</a></li>
+    </ul>
+  <ul class="stats">
+  <li class="categories">
+    <ul>
+        
+            
+            
+                <i class="fa fa-folder"></i>
+                
+                
+                <li><a class="article-category-link" href="/categories/azure">Azure</a></li>
+                
+                
+                <li><a class="article-category-link" href="/categories/cloudshell">CloudShell</a></li>
+                
+            
+        
+    </ul>
+  </li>
+  <li class="tags">
+    <ul>
+        
+    </ul>
+  </li>
+</ul>
+
+  </footer>
+</article>
+
         
             <article class="post">
   <header>
@@ -448,73 +509,6 @@
 </article>
 
         
-            <article class="post">
-  <header>
-    <div class="title">
-        
-            <h2><a href="/blog/cloud_shell_history/">Does Azure Cloud Shell store my command history?</a></h2>
-        
-        
-            <p>Describes history storage for Cloud Shell, PowerShell and Bash</p>
-        
-    </div>
-    <div class="meta">
-        
-
-        <time class="published"
-            datetime='2020-09-07'>
-            September 7, 2020</time>
-        <span class="author">Edwin Young</span>
-        
-            <p>2 minute read</p>
-        
-        
-    </div>
-</header>
-
-  
-
-  
-  <p>A few people have asked <em>&ldquo;Hey, uh, hypothetically, if I had typed a password or a secret at the Cloud Shell prompt, did you store it, and how would I delete it? Obviously I would never do this, asking for a friend.&quot;</em></p>
-  <footer>
-    <ul class="actions">
-      <li><a href="/blog/cloud_shell_history/" class="button big">Continue Reading</a></li>
-    </ul>
-  <ul class="stats">
-  <li class="categories">
-    <ul>
-        
-            
-            
-                <i class="fa fa-folder"></i>
-                
-                
-                <li><a class="article-category-link" href="/categories/azure">Azure</a></li>
-                
-                
-                <li><a class="article-category-link" href="/categories/cloudshell">CloudShell</a></li>
-                
-                
-                <li><a class="article-category-link" href="/categories/powershell">PowerShell</a></li>
-                
-                
-                <li><a class="article-category-link" href="/categories/bash">bash</a></li>
-                
-            
-        
-    </ul>
-  </li>
-  <li class="tags">
-    <ul>
-        
-    </ul>
-  </li>
-</ul>
-
-  </footer>
-</article>
-
-        
 
         
 <ul class="actions pagination">
@@ -523,7 +517,8 @@
     
 
     
-        <li><a href="#" class="disabled button big next">Next Page</a></li>
+        <li><a href="/categories/cloudshell/page/2/"
+                class="button big next">Next Page</a></li>
     
 </ul>
 
@@ -637,6 +632,20 @@
           <article class="mini-post">
             <header>
               <h3>
+                <a href="/blog/cloud_shell_files/">How Azure Cloud Shell stores your files</a>
+              </h3>
+              
+              <time class="published" datetime='2021-05-25'>
+                May 25, 2021
+              </time>
+            </header>
+            
+
+          </article>
+        
+          <article class="mini-post">
+            <header>
+              <h3>
                 <a href="/blog/cloud_shell_auth/">Azure Cloud Shell, az login, and Managed Identity</a>
               </h3>
               
@@ -690,20 +699,6 @@
 
           </article>
         
-          <article class="mini-post">
-            <header>
-              <h3>
-                <a href="/blog/azcli_and_azurepowershell_context/">What&#39;s the difference between az account show and Get-AzContext?</a>
-              </h3>
-              
-              <time class="published" datetime='2020-09-07'>
-                September 7, 2020
-              </time>
-            </header>
-            
-
-          </article>
-        
       </div>
 
       
@@ -737,6 +732,17 @@
             <header>
               
                 <a href="/categories/azure/">azure</a>
+                <span style="float:right;">5</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/cloudshell/">cloudshell</a>
                 <span style="float:right;">4</span>
               
             </header>
@@ -749,17 +755,6 @@
               
                 <a href="/categories/powershell/">powershell</a>
                 <span style="float:right;">4</span>
-              
-            </header>
-          </article>
-        </p>
-        
-        <p>
-          <article>
-            <header>
-              
-                <a href="/categories/cloudshell/">cloudshell</a>
-                <span style="float:right;">3</span>
               
             </header>
           </article>

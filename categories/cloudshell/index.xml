@@ -6,10 +6,20 @@
     <description>Recent content in CloudShell on Edwin Young</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 19 Mar 2021 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 25 May 2021 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/categories/cloudshell/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>How Azure Cloud Shell stores your files</title>
+      <link>/blog/cloud_shell_files/</link>
+      <pubDate>Tue, 25 May 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/cloud_shell_files/</guid>
+      <description>The official information on Cloud Shell&amp;rsquo;s file storage is here. It&amp;rsquo;s good stuff, and covers most things you might like to know, take a look! This blog contains a few more behind-the-scenes details for the curious. NB: We might change this in the future, this isn&amp;rsquo;t guaranteed.
+We can see from the docs that all your files are stored in an Azure File Share which belongs to you, and which you select when you first start CLoud Shell.</description>
+    </item>
     
     <item>
       <title>Azure Cloud Shell, az login, and Managed Identity</title>
