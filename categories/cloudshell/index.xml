@@ -33,6 +33,16 @@ A surprising amount of things are happening behind the scenes for this to work, 
     </item>
     
     <item>
+      <title>Some environment vars in Cloud Shell</title>
+      <link>/blog/vars/</link>
+      <pubDate>Mon, 12 Oct 2020 00:00:00 -0700</pubDate>
+      
+      <guid>/blog/vars/</guid>
+      <description>Cloud Shell sets several environment variables which can be useful. Here&amp;rsquo;s a brain dump on some of the more useful ones- the list is not exhaustive. You can see them by running env. Please note this is not official documentation and these could change!
+   Name Example Value Purpose     ACC_CLOUD PROD If you need to check if a script is in Cloud Shell, look for the existence of this variable.</description>
+    </item>
+    
+    <item>
       <title>How to install your own versions of tools in Azure Cloud Shell</title>
       <link>/blog/install_tools_locally/</link>
       <pubDate>Mon, 21 Sep 2020 18:11:06 -0700</pubDate>
@@ -40,16 +50,6 @@ A surprising amount of things are happening behind the scenes for this to work, 
       <guid>/blog/install_tools_locally/</guid>
       <description>Cloud Shell comes with a lot of tools, and we try to keep them up to date. But sometimes you need something a little bit more cutting edge or unusual. How do you install it?
 Using Cloud Shell is a little different from running your own Linux computer, but it&amp;rsquo;s a lot like using a multi-user Unix system. The main difference is you are not root and we won&amp;rsquo;t tell you the root password (sorry).</description>
-    </item>
-    
-    <item>
-      <title>Some environment vars in Cloud Shell</title>
-      <link>/blog/vars/</link>
-      <pubDate>Mon, 21 Sep 2020 18:11:06 -0700</pubDate>
-      
-      <guid>/blog/vars/</guid>
-      <description>Cloud Shell sets several environment variables which can be useful. Here&amp;rsquo;s a brain dump on some of the more useful ones- the list is not exhaustive. You can see them by running env. Please note this is not official documentation and these could change!
-   Name Example Value Purpose     ACC_CLOUD PROD If you need to check if a script is in Cloud Shell, look for the existence of this variable.</description>
     </item>
     
     <item>
