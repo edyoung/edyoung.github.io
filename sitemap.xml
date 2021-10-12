@@ -93,6 +93,11 @@
   </url>
   
   <url>
+    <loc>/blog/vars/</loc>
+    <lastmod>2020-09-21T18:11:06-07:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/blog/cloud_shell_history/</loc>
     <lastmod>2020-09-07T18:11:06-07:00</lastmod>
   </url>

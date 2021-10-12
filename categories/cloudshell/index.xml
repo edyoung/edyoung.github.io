@@ -43,6 +43,16 @@ Using Cloud Shell is a little different from running your own Linux computer, bu
     </item>
     
     <item>
+      <title>Some environment vars in Cloud Shell</title>
+      <link>/blog/vars/</link>
+      <pubDate>Mon, 21 Sep 2020 18:11:06 -0700</pubDate>
+      
+      <guid>/blog/vars/</guid>
+      <description>Cloud Shell sets several environment variables which can be useful. Here&amp;rsquo;s a brain dump on some of the more useful ones- the list is not exhaustive. You can see them by running env. Please note this is not official documentation and these could change!
+   Name Example Value Purpose     ACC_CLOUD PROD If you need to check if a script is in Cloud Shell, look for the existence of this variable.</description>
+    </item>
+    
+    <item>
       <title>Does Azure Cloud Shell store my command history?</title>
       <link>/blog/cloud_shell_history/</link>
       <pubDate>Mon, 07 Sep 2020 18:11:06 -0700</pubDate>
