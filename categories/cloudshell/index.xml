@@ -6,10 +6,20 @@
     <description>Recent content in CloudShell on Edwin Young</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 25 May 2021 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 12 Oct 2021 00:00:00 -0700</lastBuildDate>
     
 	<atom:link href="/categories/cloudshell/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Some environment vars in Cloud Shell</title>
+      <link>/blog/vars/</link>
+      <pubDate>Tue, 12 Oct 2021 00:00:00 -0700</pubDate>
+      
+      <guid>/blog/vars/</guid>
+      <description>Cloud Shell sets several environment variables which can be useful. Here&amp;rsquo;s a brain dump on some of the more useful ones- the list is not exhaustive. You can see them by running env. Please note this is not official documentation and these could change!
+   Name Example Value Purpose     ACC_CLOUD PROD If you need to check if a script is in Cloud Shell, look for the existence of this variable.</description>
+    </item>
     
     <item>
       <title>How Azure Cloud Shell stores your files</title>
@@ -30,16 +40,6 @@ We can see from the docs that all your files are stored in an Azure File Share w
       <description>When you open Azure Cloud Shell and run Get-AzVM or az vm list for the first time, it works right away. But why?
 That may seem like an odd question. Of course it should work right away! But it doesn&amp;rsquo;t work quite the same way when you run PowerShell or Azure CLI locally - you need to run Connect-AzAccount or az login first. So what&amp;rsquo;s the difference?
 A surprising amount of things are happening behind the scenes for this to work, and at the time of writing there are some limitations you might hit.</description>
-    </item>
-    
-    <item>
-      <title>Some environment vars in Cloud Shell</title>
-      <link>/blog/vars/</link>
-      <pubDate>Mon, 12 Oct 2020 00:00:00 -0700</pubDate>
-      
-      <guid>/blog/vars/</guid>
-      <description>Cloud Shell sets several environment variables which can be useful. Here&amp;rsquo;s a brain dump on some of the more useful ones- the list is not exhaustive. You can see them by running env. Please note this is not official documentation and these could change!
-   Name Example Value Purpose     ACC_CLOUD PROD If you need to check if a script is in Cloud Shell, look for the existence of this variable.</description>
     </item>
     
     <item>
