@@ -20,9 +20,9 @@
         "publisher": "",
         "accountablePerson" : "",
         "copyrightHolder" : "",
-        "copyrightYear" : "2021",
-        "datePublished": "2021-10-12 00:00:00 -0700 PDT",
-        "dateModified" : "2021-10-12 00:00:00 -0700 PDT",
+        "copyrightYear" : "2022",
+        "datePublished": "2022-01-08 00:00:00 \x2b0000 UTC",
+        "dateModified" : "2022-01-08 00:00:00 \x2b0000 UTC",
         "url" : "\/",
         "wordCount" : "0",
         "keywords" : [ "Blog" ]
@@ -72,7 +72,7 @@
 <meta property="og:description" content="Edwin Young&#39;s blog. Azure, Cloud Shell, PowerShell, Software Engineering" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="/" />
-<meta property="og:updated_time" content="2021-10-12T00:00:00-07:00" />
+<meta property="og:updated_time" content="2022-01-08T00:00:00+00:00" />
 
         <meta property="og:image" content="//images/logo.png">
         <meta property="og:image:type" content="image/png">
@@ -239,6 +239,18 @@
                 
                         <article class="mini-post">
                             <header>
+                                <h3><a href="/blog/weird_bugs/">Interesting issues encountered with the Azure Connected Machine Agent</a></h3>
+                                
+                                <time class="published" datetime=
+                                    '2022-01-08'>
+                                    January 8, 2022</time>
+                            </header>
+                            
+
+                        </article>
+                
+                        <article class="mini-post">
+                            <header>
                                 <h3><a href="/blog/vars/">Some environment vars in Cloud Shell</a></h3>
                                 
                                 <time class="published" datetime=
@@ -285,18 +297,6 @@
 
                         </article>
                 
-                        <article class="mini-post">
-                            <header>
-                                <h3><a href="/blog/install_tools_locally/">How to install your own versions of tools in Azure Cloud Shell</a></h3>
-                                
-                                <time class="published" datetime=
-                                    '2020-09-21'>
-                                    September 21, 2020</time>
-                            </header>
-                            
-
-                        </article>
-                
 
                 
                     <a href=
@@ -319,21 +319,21 @@
   <header>
     <div class="title">
         
-            <h2><a href="/blog/vars/">Some environment vars in Cloud Shell</a></h2>
+            <h2><a href="/blog/weird_bugs/">Interesting issues encountered with the Azure Connected Machine Agent</a></h2>
         
         
-            <p>Environment Variables in Azure Cloud Shell</p>
+            <p>Strange things happen when you reach enough machines</p>
         
     </div>
     <div class="meta">
         
 
         <time class="published"
-            datetime='2021-10-12'>
-            October 12, 2021</time>
+            datetime='2022-01-08'>
+            January 8, 2022</time>
         <span class="author">Edwin Young</span>
         
-            <p>1 minute read</p>
+            <p>3 minute read</p>
         
         
     </div>
@@ -345,48 +345,21 @@
   
 
   <div id="content">
-    <p>Cloud Shell sets several environment variables which can be useful. Here&rsquo;s a brain dump on some of the more useful ones- the list is not exhaustive. You can see them by running <code>env</code>. <strong>Please note this is not official documentation and these could change!</strong></p>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Example Value</th>
-<th>Purpose</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>ACC_CLOUD</strong></td>
-<td>PROD</td>
-<td>If you need to check if a script is in Cloud Shell, look for the existence of this variable. PROD is the normal value - if you are in the Azure Government cloud the value will be different</td>
-</tr>
-<tr>
-<td><strong>ACC_TID</strong></td>
-<td>72f98888-8681-488f-91ab-2d7cd011db47</td>
-<td>This is your Tenant ID in Azure AD.</td>
-</tr>
-<tr>
-<td><strong>ACC_PUID</strong></td>
-<td>10033FFF8006C82E</td>
-<td>Your unique user ID in Azure AD.</td>
-</tr>
-<tr>
-<td><strong>MSI_ENDPOINT</strong></td>
-<td>http://localhost:50342/oauth2/token</td>
-<td>The URL which can be used to retrieve access tokens. See <a href="/blog/cloud_shell_auth/">this doc</a> for some more detail.</td>
-</tr>
-<tr>
-<td><strong>ACC_LOCATION</strong></td>
-<td>WESTUS</td>
-<td>The region your Cloud Shell container is running in.</td>
-</tr>
-<tr>
-<td><strong>ACC_VERSION</strong></td>
-<td>master_20211008.2</td>
-<td>The build of the Cloud Shell image which is running.</td>
-</tr>
-</tbody>
-</table>
+    <p>One of the components I work on is the <a href="https://docs.microsoft.com/en-us/azure/azure-arc/servers/agent-overview">Azure Connected Machine Agent</a>. This is an agent component which can be installed on many different Windows versions and Linux distributions. One thing with a software package which customers install on their own machines is operating systems can be configured in so many different ways. You start to find quite obscure issues that crop up on a tiny fraction of the install base. Here are some of their stories.</p>
+<h2 id="ceci-nest-pas-un-pipe">Ceci n&rsquo;est pas un pipe</h2>
+<p>One customer reported that one <em>some</em> of their machines, the agent was unable to start up. The logs showed that we we bailed out while trying to listen on a named pipe. The agent service creates a named pipe <code>\\.\pipe\himds</code> at startup, which azcmagent.exe uses - for example when you run <code>azcmagent connect</code> we send a message through this pipe to the service to configure it.</p>
+<p>On the affected machines, the system call to create the pipe failed. After a lot of debugging, we determined that these machines had been configured with a specific local security policy <code>Computer Configuration &gt;&gt; Windows Settings &gt;&gt; Security Settings &gt;&gt; Local Policies &gt;&gt; Security Options &gt;&gt; &quot;System objects: Require case insensitivity for non-Windows subsystems&quot;</code></p>
+<p>The docs for this setting say:</p>
+<p>&ldquo;This security setting determines whether case insensitivity is enforced for all subsystems. The Win32 subsystem is case insensitive. However, the kernel supports case sensitivity for other subsystems, such as POSIX.</p>
+<p>If this setting is enabled, case insensitivity is enforced for all directory objects, symbolic links, and IO objects, including file objects. Disabling this setting does not allow the Win32 subsystem to become case sensitive.&rdquo;</p>
+<p>So you would expect that this would only affect programs which use the POSIX subsystem in Windows - a vanishingly small number nowadays. Our code certainly doesn&rsquo;t use it. But somehow, when this setting was switched from the default Enabled to Disabled, it affects the behavior of Named Pipes.</p>
+<p>In my humble opinion, this is a Windows bug. Named pipes are not part of the POSIX subsystem and the documentation doesn&rsquo;t indicate that &lsquo;pipe&rsquo; is case sensitive. However, we found that if we change the pipe name in our code to <code>\\.\PIPE\himds</code> everything worked, regardless of the value of this setting. Fixing that is a lot simpler than backporting a fix to many millions of Windows servers, so we made that change.</p>
+<h2 id="dcomissioned">DCOMissioned</h2>
+<p>Another customer found that our agent was unable to start on one out of 2000 of <em>their</em> machines. This time, the logs showed a failure while trying to listen on a local TCP port - the agent listens to 127.0.0.1:40342 for IMDS requests. On this one machine, the listen() call was failing. If we ran the code as a regular user instead of a service, it worked as expected.</p>
+<p>Again after some fairly extensive debugging, we found an error message in the Event Log:</p>
+<p>&ldquo;The application-specific configuration settings do not grant Local Activation permission for the COM server with CLSID {D63B10C5-BB46-4990-A94F-E40B9D520160} and AppID {9CA88EE3-ACB7-47c8-AFC4-AB702511C276}&hellip;&rdquo;</p>
+<p>This was strange. We don&rsquo;t use COM or DCOM at all in Azure Connected Machine Agent. Why was this happening?</p>
+<p>We were able to resolve it by using <code>dcomcnfg.exe</code> to adjust the permissions on the RuntimeBroker component. By default, all applications get Read access to this component, which was missing on this particular server. But sadly I still haven&rsquo;t figured out why there&rsquo;s any connection between this COM component and socket operations, or what changed that config setting on one machine.</p>
 
   </div>
 
@@ -400,10 +373,10 @@
                 <i class="fa fa-folder"></i>
                 
                 
-                <li><a class="article-category-link" href="/categories/azure">Azure</a></li>
+                <li><a class="article-category-link" href="/categories/arc">Arc</a></li>
                 
                 
-                <li><a class="article-category-link" href="/categories/cloudshell">CloudShell</a></li>
+                <li><a class="article-category-link" href="/categories/softwareengineering">SoftwareEngineering</a></li>
                 
             
         
@@ -429,8 +402,8 @@
 
 <ul class="actions pagination">
     
-        <li><a href="/blog/cloud_shell_files/"
-                class="button big previous">How Azure Cloud Shell stores your files</a></li>
+        <li><a href="/blog/vars/"
+                class="button big previous">Some environment vars in Cloud Shell</a></li>
     
 
     
@@ -449,7 +422,7 @@
 
 
 <li>
-  <a href="//twitter.com/share?url=%2fblog%2fvars%2f&amp;text=Some%20environment%20vars%20in%20Cloud%20Shell&amp;via=snuffling" target="_blank" class="share-btn twitter">
+  <a href="//twitter.com/share?url=%2fblog%2fweird_bugs%2f&amp;text=Interesting%20issues%20encountered%20with%20the%20Azure%20Connected%20Machine%20Agent&amp;via=snuffling" target="_blank" class="share-btn twitter">
     <i class="fa fa-twitter"></i>
     <p>Twitter</p>
     </a>
@@ -459,7 +432,7 @@
 
 
 <li>
-  <a href="//plus.google.com/share?url=%2fblog%2fvars%2f" target="_blank" class="share-btn google-plus">
+  <a href="//plus.google.com/share?url=%2fblog%2fweird_bugs%2f" target="_blank" class="share-btn google-plus">
     <i class="fa fa-google-plus"></i>
     <p>Google+</p>
   </a>
@@ -470,7 +443,7 @@
 
 
 <li>
-  <a href="//www.facebook.com/sharer/sharer.php?u=%2fblog%2fvars%2f" target="_blank" class="share-btn facebook">
+  <a href="//www.facebook.com/sharer/sharer.php?u=%2fblog%2fweird_bugs%2f" target="_blank" class="share-btn facebook">
     <i class="fa fa-facebook"></i>
     <p>Facebook</p>
     </a>
@@ -480,7 +453,7 @@
 
 
 <li>
-  <a href="//reddit.com/submit?url=%2fblog%2fvars%2f&amp;title=Some%20environment%20vars%20in%20Cloud%20Shell" target="_blank" class="share-btn reddit">
+  <a href="//reddit.com/submit?url=%2fblog%2fweird_bugs%2f&amp;title=Interesting%20issues%20encountered%20with%20the%20Azure%20Connected%20Machine%20Agent" target="_blank" class="share-btn reddit">
     <i class="fa fa-reddit-alien"></i>
     <p>Reddit</p>
   </a>
@@ -490,7 +463,7 @@
 
 
 <li>
-  <a href="//www.linkedin.com/shareArticle?url=%2fblog%2fvars%2f&amp;title=Some%20environment%20vars%20in%20Cloud%20Shell" target="_blank" class="share-btn linkedin">
+  <a href="//www.linkedin.com/shareArticle?url=%2fblog%2fweird_bugs%2f&amp;title=Interesting%20issues%20encountered%20with%20the%20Azure%20Connected%20Machine%20Agent" target="_blank" class="share-btn linkedin">
       <i class="fa fa-linkedin"></i>
       <p>LinkedIn</p>
     </a>
@@ -500,7 +473,7 @@
 
 
 <li>
-  <a href="//www.stumbleupon.com/submit?url=%2fblog%2fvars%2f&amp;title=Some%20environment%20vars%20in%20Cloud%20Shell" target="_blank" class="share-btn stumbleupon">
+  <a href="//www.stumbleupon.com/submit?url=%2fblog%2fweird_bugs%2f&amp;title=Interesting%20issues%20encountered%20with%20the%20Azure%20Connected%20Machine%20Agent" target="_blank" class="share-btn stumbleupon">
     <i class="fa fa-stumbleupon"></i>
     <p>StumbleUpon</p>
   </a>
@@ -510,7 +483,7 @@
 
 
 <li>
-  <a href="//www.pinterest.com/pin/create/button/?url=%2fblog%2fvars%2f&amp;description=Some%20environment%20vars%20in%20Cloud%20Shell" target="_blank" class="share-btn pinterest">
+  <a href="//www.pinterest.com/pin/create/button/?url=%2fblog%2fweird_bugs%2f&amp;description=Interesting%20issues%20encountered%20with%20the%20Azure%20Connected%20Machine%20Agent" target="_blank" class="share-btn pinterest">
     <i class="fa fa-pinterest-p"></i>
     <p>Pinterest</p>
   </a>
@@ -520,7 +493,7 @@
 
 
 <li>
-  <a href="mailto:?subject=Check out this post by Edwin%20Young&amp;body=%2fblog%2fvars%2f" target="_blank" class="share-btn email">
+  <a href="mailto:?subject=Check out this post by Edwin%20Young&amp;body=%2fblog%2fweird_bugs%2f" target="_blank" class="share-btn email">
     <i class="fa fa-envelope"></i>
     <p>Email</p>
   </a>
@@ -642,6 +615,20 @@
           <article class="mini-post">
             <header>
               <h3>
+                <a href="/blog/weird_bugs/">Interesting issues encountered with the Azure Connected Machine Agent</a>
+              </h3>
+              
+              <time class="published" datetime='2022-01-08'>
+                January 8, 2022
+              </time>
+            </header>
+            
+
+          </article>
+        
+          <article class="mini-post">
+            <header>
+              <h3>
                 <a href="/blog/vars/">Some environment vars in Cloud Shell</a>
               </h3>
               
@@ -689,20 +676,6 @@
               
               <time class="published" datetime='2020-09-22'>
                 September 22, 2020
-              </time>
-            </header>
-            
-
-          </article>
-        
-          <article class="mini-post">
-            <header>
-              <h3>
-                <a href="/blog/install_tools_locally/">How to install your own versions of tools in Azure Cloud Shell</a>
-              </h3>
-              
-              <time class="published" datetime='2020-09-21'>
-                September 21, 2020
               </time>
             </header>
             
@@ -796,7 +769,29 @@
           <article>
             <header>
               
+                <a href="/categories/arc/">arc</a>
+                <span style="float:right;">1</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
                 <a href="/categories/azurearc/">azurearc</a>
+                <span style="float:right;">1</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/softwareengineering/">softwareengineering</a>
                 <span style="float:right;">1</span>
               
             </header>
@@ -893,7 +888,7 @@
     
     <p class="copyright">
       
-        &copy; 2021
+        &copy; 2022
         
           Edwin Young
         

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Arc on Edwin Young</title>
+    <link>/categories/arc/</link>
+    <description>Recent content in Arc on Edwin Young</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 08 Jan 2022 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/categories/arc/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Interesting issues encountered with the Azure Connected Machine Agent</title>
+      <link>/blog/weird_bugs/</link>
+      <pubDate>Sat, 08 Jan 2022 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/weird_bugs/</guid>
+      <description>One of the components I work on is the Azure Connected Machine Agent. This is an agent component which can be installed on many different Windows versions and Linux distributions. One thing with a software package which customers install on their own machines is operating systems can be configured in so many different ways. You start to find quite obscure issues that crop up on a tiny fraction of the install base.</description>
+    </item>
+    
+  </channel>
+</rss>
