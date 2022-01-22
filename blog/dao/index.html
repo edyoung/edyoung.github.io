@@ -24,7 +24,7 @@
         "datePublished": "2022-01-21 00:00:00 \x2b0000 UTC",
         "dateModified" : "2022-01-21 00:00:00 \x2b0000 UTC",
         "url" : "\/blog\/dao\/",
-        "wordCount" : "1217",
+        "wordCount" : "1238",
         "keywords" : [ "Blog" ]
     }
     </script>
@@ -83,7 +83,7 @@
 <meta itemprop="description" content="Why DAOs don&#39;t work the way you might expect">
 <meta itemprop="datePublished" content="2022-01-21T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2022-01-21T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="1217">
+<meta itemprop="wordCount" content="1238">
 
 
 
@@ -421,8 +421,7 @@
   <header>
     <div class="title">
         
-            <h1><a href="/blog/dao/">DAOn&#39;t believe the hype</a></h1>
-            
+            <h2><a href="/blog/dao/">DAOn&#39;t believe the hype</a></h2>
         
         
             <p>Why DAOs don&#39;t work the way you might expect</p>
@@ -472,35 +471,44 @@
 @DrydenwtBrown (Praxis Society)
 </code></pre><p><a href="https://dune.foundation/">source</a></p>
 <p>This means that the DAO can only transfer funds if 3 out of 5 of these people agree to do so by signing the transaction. (Incidentally, it would be entirely possible to create a DAO where all of the signing keys are held by the same real-world individual via multiple separate wallets, thus giving the illusion of a &lsquo;board&rsquo; where none exists. I&rsquo;m not alleging that is the case for the Spice DAO, just that in general it is possible to do so, and quite hard for someone else to detect.)</p>
-<p>What limitations are there on what the signers can do, as long as 3 of them agree to do it? Can they spend all the money on fine wines and yachts? Well, they can do whatever the smart contract allows them to so. Ethereum allows &lsquo;smart contracts&rsquo; - snippets of code which enforce rules, mostly about how cryptographic transactions occur. So you might hope from the Ethereum website&rsquo;s description that &ldquo;There&rsquo;s no CEO who can authorize spending on their own whims&rdquo; is enforced by a smart contract.</p>
-<p>For Spice DAO, and I believe the vast majority of DAOs, this is not the case. The &lsquo;smart contract&rsquo; can be found <a href="https://etherscan.io/address/0x9b6db7597a74602a5a806e33408e7e2dafa58193#code">here</a>). It&rsquo;s rather difficult to audit because there&rsquo;s no verified source code for this contract, just a bunch of Ethereum bytecode. If it&rsquo;s not obvious to you what a page of hex digits starting with &lsquo;0x608060405234801561001057600080fd5b50600436106101515760003560e01c8063715018a61&hellip;&rsquo; means, you&rsquo;re not alone. Fortunately the Etherscan.io website comes with a decompiler which can convert it to <a href="https://etherscan.io/bytecode-decompiler?a=0x9b6db7597a74602a5a806e33408e7e2dafa58193">something semi-readable</a>.</p>
+<p>What limitations are there on what the signers can do, as long as 3 of them agree to do it? Can they spend all the money on fine wines and yachts? Well, they can do whatever the smart contract allows them to. Ethereum allows &lsquo;smart contracts&rsquo; - snippets of code which enforce rules, mostly about how cryptographic transactions occur. So you might hope from the Ethereum website&rsquo;s description that &ldquo;There&rsquo;s no CEO who can authorize spending on their own whims&rdquo; is enforced by a smart contract.</p>
+<p>For Spice DAO, and I believe the vast majority of DAOs, this is not the case. The &lsquo;smart contract&rsquo; can be found <a href="https://etherscan.io/address/0x9b6db7597a74602a5a806e33408e7e2dafa58193#code">here</a>. It&rsquo;s rather difficult to audit because there&rsquo;s no verified source code for this contract, just a bunch of Ethereum bytecode. If it&rsquo;s not obvious to you what a page of hex digits starting with &lsquo;0x608060405234801561001057600080fd5b50600436106101515760003560e01c8063715018a61&hellip;&rsquo; means, you&rsquo;re not alone. Fortunately the Etherscan.io website comes with a decompiler which can convert it to <a href="https://etherscan.io/bytecode-decompiler?a=0x9b6db7597a74602a5a806e33408e7e2dafa58193">something semi-readable</a>.</p>
 <p>I&rsquo;m not an expert in deciphering these contracts (and I definitely wouldn&rsquo;t be able to spot a well-disguised malicious contract), but as far as I can see it&rsquo;s just a wallet. In particular there&rsquo;s no encoded limitations on what the wallet holders can do (such as limits on transaction size or counterparties). So my claim is that in practice, &lsquo;3 out of 5 wallet holders <em>can</em> authorize spending based on their own whims&rsquo;.</p>
 <p>&ldquo;But wait!&rdquo; I hear you say. What about governance tokens? Don&rsquo;t those control the DAO?</p>
 <p>Glad you asked.</p>
 <h1 id="governance-tokens-and-proposals">Governance Tokens and Proposals</h1>
 <p>When you fund a DAO, you are typically given tokens in return - in the case of the Spice DAO, these are called $SPICE. These can be bought and sold, and each such token gives you one vote on any governance proposal. If a majority of tokens vote in favor of the proposal, it is passed. The Spice DAO page says &ldquo;Proposals will be executed on-chain by the multisig.&rdquo; which sounds important. Power to the people!</p>
 <p>Well, sort of.</p>
-<p>The Spice DAO has had one governance proposal so far, the text of which can be seen here: <a href="https://snapshot.org/#/dunedao.eth/proposal/0x2038fc240d0e85c496cc692d0001fb159d6f613b546392aa96e49a3b752ced0d">https://snapshot.org/#/dunedao.eth/proposal/0x2038fc240d0e85c496cc692d0001fb159d6f613b546392aa96e49a3b752ced0d</a> . This was held <em>after</em> the initial auction - it&rsquo;s interesting to me that during the most important times in the DAO&rsquo;s existence - the initial fundraising and the purchase of the book - there was actually no formal governance of the DAO beyond the mission statement on the fundraising page.</p>
+<p>The Spice DAO has had one governance proposal so far, the text of which can be seen here: <a href="https://snapshot.org/#/dunedao.eth/proposal/0x2038fc240d0e85c496cc692d0001fb159d6f613b546392aa96e49a3b752ced0d">https://snapshot.org/#/dunedao.eth/proposal/0x2038fc240d0e85c496cc692d0001fb159d6f613b546392aa96e49a3b752ced0d</a> . This was held <em>after</em> the initial auction. It&rsquo;s interesting to me that during the most important times in the DAO&rsquo;s existence - the initial fundraising and the purchase of the book - there was actually no formal governance of the DAO beyond the mission statement on the fundraising page. In fact, the book was actually purchased by @sobylife using his own money, and the DAO reimbursed him.</p>
 <p>The proposal formalizes who can do what, and how much money they can spend, eg.</p>
-<pre><code>Operations Budget
+<blockquote>
+<p>Operations Budget</p>
+</blockquote>
+<blockquote>
+<p>As Treasurer, Charlie will have autonomy in using funds to cover monthly operational expenses such as core team compensation and third-party independent contractor invoices with a monthly discretionary budget of 50,000 USDC:</p>
+</blockquote>
+<blockquote>
+<p>Core team compensation = Maximum 31,665.60 USDC/month</p>
+</blockquote>
+<blockquote>
+<p>Third-party contractors such as IT, social media agency, book shipping and storage and software developers, and unforeseen incidentals = Maximum 18,334.40 USDC/month</p>
+</blockquote>
+<pre><code>
+The governance proposal was passed with little fuss and 95.97% of votes in favor. It was 'executed on chain' by creating a block with a link to an [IPFS file](https://cloudflare-ipfs.com/ipfs/QmYLXfkgsoPkHJsEZxNV1GfgnSp8u4qrjaocx175yVVzVb) containing the English text of the proposal. But it's important to note a couple of things.
 
-As Treasurer, Charlie will have autonomy in using funds to cover monthly operational expenses such as core team compensation and third-party independent contractor invoices with a monthly discretionary budget of 50,000 USDC:
+1) The governance proposal is just English, not code. It has no technical effect on the smart contract or what the DAO signature holders can actually do.
+2) It's a little unclear whether it constitutes a legally binding contract either. I Am Not A Lawyer, but I don't believe it's well-settled law whether a DAO token owner can sue anyone for not abiding by the terms in the governance proposal. 
 
-Core team compensation = Maximum 31,665.60 USDC/month
-Third-party contractors such as IT, social media agency, book shipping and storage and software developers, and unforeseen incidentals = Maximum 18,334.40 USDC/month
-</code></pre><p>The governance proposal was passed with little fuss and 95.97% of votes in favor. It was &lsquo;executed on chain&rsquo; by creating a block with a link to an <a href="https://cloudflare-ipfs.com/ipfs/QmYLXfkgsoPkHJsEZxNV1GfgnSp8u4qrjaocx175yVVzVb">IPFS file</a> containing the English text of the proposal. But it&rsquo;s important to note a couple of things.</p>
-<ol>
-<li>The governance proposal is just English, not code. It has no technical effect on the smart contract or what the DAO signature holders can actually do.</li>
-<li>It&rsquo;s a little unclear whether it constitutes a legally binding contract either. I Am Not A Lawyer, but I don&rsquo;t believe it&rsquo;s well-settled law whether a DAO token owner can sue anyone for not abiding by the terms in the governance proposal.</li>
-</ol>
-<p>So these governance proposals are purely advisory, and they&rsquo;re almost certainly toothless if the signature holders don&rsquo;t want to play ball. Also also:</p>
-<ul>
-<li>Who gets to decide if a governance proposal even comes up for a vote? Why the signature holders of course. If you have a proposal they don&rsquo;t like, nobody will ever get to vote on it.</li>
-<li>In this case, over 50% of the votes were cast by a single individual. I suspect whales will determine the outcome of any proposal vote in practice.</li>
-</ul>
-<h1 id="conclusions">Conclusions</h1>
-<p>Many DAOs are neither decentralized (power belongs to the signers and somewhat to major token holders), autonomous (most smart contracts are anything but) nor particularly organized. They are essentially wallets with a handful of signers and a manifesto. You might want to bear this in mind when choosing whether to invest. There are definitely some projects which are trying more complex approaches (see <a href="https://medium.com/compound-finance/building-a-governance-interface-474fc271588c">https://medium.com/compound-finance/building-a-governance-interface-474fc271588c</a>) but you should not assume that any given DAO uses these.</p>
+So these governance proposals are purely advisory, and they're almost certainly toothless if the signature holders don't want to play ball. Also also:
 
+- Who gets to decide if a governance proposal even comes up for a vote? Why the signature holders of course. If you have a proposal they don't like, nobody will ever get to vote on it.
+- In this case, over 50% of the votes were cast by a single individual. I suspect whales will determine the outcome of any proposal vote in practice.
+
+# Conclusions
+
+Many DAOs are neither decentralized (power belongs to the signers and somewhat to major token holders), autonomous (most smart contracts are anything but) nor particularly organized. They are essentially wallets with a handful of signers and a manifesto. You might want to bear this in mind when choosing whether to invest. There are definitely some projects which are trying more complex approaches (see https://medium.com/compound-finance/building-a-governance-interface-474fc271588c) but you should not assume that any given DAO uses these. 
+
+</code></pre>
   </div>
 
   <footer>
