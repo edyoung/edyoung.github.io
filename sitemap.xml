@@ -3,22 +3,32 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>/categories/arc/</loc>
-    <lastmod>2022-01-08T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>/blog/</loc>
-    <lastmod>2022-01-08T00:00:00+00:00</lastmod>
+    <lastmod>2022-01-21T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>/categories/</loc>
-    <lastmod>2022-01-08T00:00:00+00:00</lastmod>
+    <lastmod>2022-01-21T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/categories/crypto/</loc>
+    <lastmod>2022-01-21T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/blog/dao/</loc>
+    <lastmod>2022-01-21T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>/</loc>
+    <lastmod>2022-01-21T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/categories/arc/</loc>
     <lastmod>2022-01-08T00:00:00+00:00</lastmod>
   </url>
   
