@@ -21,8 +21,8 @@
         "accountablePerson" : "",
         "copyrightHolder" : "",
         "copyrightYear" : "2022",
-        "datePublished": "2022-01-21 00:00:00 \x2b0000 UTC",
-        "dateModified" : "2022-01-21 00:00:00 \x2b0000 UTC",
+        "datePublished": "2022-03-26 00:00:00 \x2b0000 UTC",
+        "dateModified" : "2022-03-26 00:00:00 \x2b0000 UTC",
         "url" : "\/",
         "wordCount" : "0",
         "keywords" : [ "Blog" ]
@@ -72,7 +72,7 @@
 <meta property="og:description" content="Edwin Young&#39;s blog. Azure, Cloud Shell, PowerShell, Software Engineering" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="/" />
-<meta property="og:updated_time" content="2022-01-21T00:00:00+00:00" />
+<meta property="og:updated_time" content="2022-03-26T00:00:00+00:00" />
 
         <meta property="og:image" content="//images/logo.png">
         <meta property="og:image:type" content="image/png">
@@ -239,6 +239,18 @@
                 
                         <article class="mini-post">
                             <header>
+                                <h3><a href="/blog/perpetual_motion/">Financial Perpetual Motion</a></h3>
+                                
+                                <time class="published" datetime=
+                                    '2022-03-26'>
+                                    March 26, 2022</time>
+                            </header>
+                            
+
+                        </article>
+                
+                        <article class="mini-post">
+                            <header>
                                 <h3><a href="/blog/dao/">DAOn&#39;t believe the hype</a></h3>
                                 
                                 <time class="published" datetime=
@@ -285,18 +297,6 @@
 
                         </article>
                 
-                        <article class="mini-post">
-                            <header>
-                                <h3><a href="/blog/cloud_shell_auth/">Azure Cloud Shell, az login, and Managed Identity</a></h3>
-                                
-                                <time class="published" datetime=
-                                    '2021-03-19'>
-                                    March 19, 2021</time>
-                            </header>
-                            
-
-                        </article>
-                
 
                 
                     <a href=
@@ -319,21 +319,21 @@
   <header>
     <div class="title">
         
-            <h2><a href="/blog/dao/">DAOn&#39;t believe the hype</a></h2>
+            <h2><a href="/blog/perpetual_motion/">Financial Perpetual Motion</a></h2>
         
         
-            <p>Why DAOs don&#39;t work the way you might expect</p>
+            <p>Reasons to be skeptical of certain crypto projects</p>
         
     </div>
     <div class="meta">
         
 
         <time class="published"
-            datetime='2022-01-21'>
-            January 21, 2022</time>
+            datetime='2022-03-26'>
+            January 8, 2022</time>
         <span class="author">Edwin Young</span>
         
-            <p>6 minute read</p>
+            <p>5 minute read</p>
         
         
     </div>
@@ -345,64 +345,53 @@
   
 
   <div id="content">
-    <p>Disclaimer: I&rsquo;m not an expert on the crypto space, just a curious amateur. It&rsquo;s quite possible I have misunderstood something important below. Do let me know of any corrections via the comment section!</p>
-<p>If you read the <a href="https://ethereum.org/en/dao/">Ethereum website on DAO&rsquo;s</a>, you&rsquo;ll see this:</p>
-<blockquote>
-<p>DAOs are an effective and safe way to work with like-minded folks around the globe.</p>
-</blockquote>
-<blockquote>
-<p>Think of them like an internet-native business that&rsquo;s collectively owned and managed by its members. They have built-in treasuries that no one has the authority to access without the approval of the group. Decisions are governed by proposals and voting to ensure everyone in the organization has a voice.</p>
-</blockquote>
-<blockquote>
-<p>There&rsquo;s no CEO who can authorize spending based on their own whims and no chance of a dodgy CFO manipulating the books. Everything is out in the open and the rules around spending are baked into the DAO via its code.</p>
-</blockquote>
-<p>This is <em>not really true</em> for most DAOs. I&rsquo;ll explain.</p>
-<p>I will use &lsquo;The Spice DAO&rsquo; (aka Dune DAO) as an example, since that&rsquo;s been <a href="https://www.buzzfeednews.com/article/amansethi/spicedao-dunedao-soby">in the news</a> lately. This DAO was originally set up with the stated goal of purchasing a copy of the &lsquo;pitch book&rsquo; Alejandro Jodorowsky put together while trying to persuade Hollywood studios to fund a movie he wanted to make based on Frank Herbert&rsquo;s novel Dune. They succeeded in raising a substantial amount of money - approximately $12M dollars. They were then able to purchase the book at auction, but then had to work out what to do with the rest of the money. I think the fight that ensued over the proper fate of the funds encapsulates a lot of the issues around DAO governance.</p>
-<h1 id="the-contract">The contract</h1>
-<p>It <em>is</em> true that there&rsquo;s no official CEO or CFO for a DAO. But that doesn&rsquo;t mean there isn&rsquo;t an inner circle of people who hold the true power. In a DAO, these are the people who know the private keys to the DAO&rsquo;s wallet. For the Dune DAO these are</p>
-<pre><code>Spice DAO's funds will be held in a 3/5 Gnosis Multi-sig of the following team:
-
-@Yojimbo_King (Remilia Collective)
-@Sobylife (Ex Populus)
-@CharlieFang77 (Remilia Collective)
-@DeezeFi (Fractional Art)
-@DrydenwtBrown (Praxis Society)
-</code></pre><p><a href="https://dune.foundation/">source</a></p>
-<p>This means that the DAO can only transfer funds if 3 out of 5 of these people agree to do so by signing the transaction. (Incidentally, it would be entirely possible to create a DAO where all of the signing keys are held by the same real-world individual via multiple separate wallets, thus giving the illusion of a &lsquo;board&rsquo; where none exists. I&rsquo;m not alleging that is the case for the Spice DAO, just that in general it is possible to do so, and quite hard for someone else to detect.)</p>
-<p>What limitations are there on what the signers can do, as long as 3 of them agree to do it? Can they spend all the money on fine wines and yachts? Well, they can do whatever the smart contract allows them to. Ethereum allows &lsquo;smart contracts&rsquo; - snippets of code which enforce rules, mostly about how cryptographic transactions occur. So you might hope from the Ethereum website&rsquo;s description that &ldquo;There&rsquo;s no CEO who can authorize spending on their own whims&rdquo; is enforced by a smart contract.</p>
-<p>For Spice DAO, and I believe the vast majority of DAOs, this is not the case. The &lsquo;smart contract&rsquo; can be found <a href="https://etherscan.io/address/0x9b6db7597a74602a5a806e33408e7e2dafa58193#code">here</a>. It&rsquo;s rather difficult to audit because there&rsquo;s no verified source code for this contract, just a bunch of Ethereum bytecode. If it&rsquo;s not obvious to you what a page of hex digits starting with &lsquo;0x608060405234801561001057600080fd5b50600436106101515760003560e01c8063715018a61&hellip;&rsquo; means, you&rsquo;re not alone. Fortunately the Etherscan.io website comes with a decompiler which can convert it to <a href="https://etherscan.io/bytecode-decompiler?a=0x9b6db7597a74602a5a806e33408e7e2dafa58193">something semi-readable</a>.</p>
-<p>I&rsquo;m not an expert in deciphering these contracts (and I definitely wouldn&rsquo;t be able to spot a well-disguised malicious contract), but as far as I can see it&rsquo;s just a wallet. In particular there&rsquo;s no encoded limitations on what the wallet holders can do (such as limits on transaction size or counterparties). So my claim is that in practice, &lsquo;3 out of 5 wallet holders <em>can</em> authorize spending based on their own whims&rsquo;.</p>
-<p>&ldquo;But wait!&rdquo; I hear you say. What about governance tokens? Don&rsquo;t those control the DAO?</p>
-<p>Glad you asked.</p>
-<h1 id="governance-tokens-and-proposals">Governance Tokens and Proposals</h1>
-<p>When you fund a DAO, you are typically given tokens in return - in the case of the Spice DAO, these are called $SPICE. These can be bought and sold, and each such token gives you one vote on any governance proposal. If a majority of tokens vote in favor of the proposal, it is passed. The Spice DAO page says &ldquo;Proposals will be executed on-chain by the multisig.&rdquo; which sounds important. Power to the people!</p>
-<p>Well, sort of.</p>
-<p>The Spice DAO has had one governance proposal so far, the text of which can be seen here: <a href="https://snapshot.org/#/dunedao.eth/proposal/0x2038fc240d0e85c496cc692d0001fb159d6f613b546392aa96e49a3b752ced0d">https://snapshot.org/#/dunedao.eth/proposal/0x2038fc240d0e85c496cc692d0001fb159d6f613b546392aa96e49a3b752ced0d</a> . This was held <em>after</em> the initial auction. It&rsquo;s interesting to me that during the most important times in the DAO&rsquo;s existence - the initial fundraising and the purchase of the book - there was actually no formal governance of the DAO beyond the mission statement on the fundraising page. In fact, the book was actually purchased by @sobylife using his own money, and the DAO reimbursed him.</p>
-<p>The proposal formalizes who can do what, and how much money they can spend, eg.</p>
-<blockquote>
-<p>Operations Budget</p>
-</blockquote>
-<blockquote>
-<p>As Treasurer, Charlie will have autonomy in using funds to cover monthly operational expenses such as core team compensation and third-party independent contractor invoices with a monthly discretionary budget of 50,000 USDC:</p>
-</blockquote>
-<blockquote>
-<p>Core team compensation = Maximum 31,665.60 USDC/month</p>
-</blockquote>
-<blockquote>
-<p>Third-party contractors such as IT, social media agency, book shipping and storage and software developers, and unforeseen incidentals = Maximum 18,334.40 USDC/month</p>
-</blockquote>
-<p>The governance proposal was passed with little fuss and 95.97% of votes in favor. It was &lsquo;executed on chain&rsquo; by creating a block with a link to an <a href="https://cloudflare-ipfs.com/ipfs/QmYLXfkgsoPkHJsEZxNV1GfgnSp8u4qrjaocx175yVVzVb">IPFS file</a> containing the English text of the proposal. But it&rsquo;s important to note a couple of things.</p>
-<ol>
-<li>The governance proposal is just English, not code. It has no technical effect on the smart contract or what the DAO signature holders can actually do.</li>
-<li>It&rsquo;s a little unclear whether it constitutes a legally binding contract either. I Am Not A Lawyer, but I don&rsquo;t believe it&rsquo;s well-settled law whether a DAO token owner can sue anyone for not abiding by the terms in the governance proposal.</li>
-</ol>
-<p>So these governance proposals are purely advisory, and they&rsquo;re almost certainly toothless if the signature holders don&rsquo;t want to play ball. Also also:</p>
-<ul>
-<li>Who gets to decide if a governance proposal even comes up for a vote? Why the signature holders of course. If you have a proposal they don&rsquo;t like, nobody will ever get to vote on it.</li>
-<li>In this case, over 50% of the votes were cast by a single individual. I suspect whales will determine the outcome of any proposal vote in practice.</li>
-</ul>
-<h1 id="conclusions">Conclusions</h1>
-<p>Many DAOs are neither decentralized (power belongs to the signers and somewhat to major token holders), autonomous (most smart contracts are anything but) nor particularly organized. They are essentially wallets with a handful of signers and a manifesto. You might want to bear this in mind when choosing whether to invest. There are definitely some projects which are trying more complex approaches (see <a href="https://medium.com/compound-finance/building-a-governance-interface-474fc271588c">https://medium.com/compound-finance/building-a-governance-interface-474fc271588c</a>) but you should not assume that any given DAO uses these.</p>
+    <h1 id="financial-perpetual-motion">Financial Perpetual Motion</h1>
+<p>Every so often, someone claims to have created a <a href="https://newspunch.com/incredible-scientist-makes-free-energy-perpetual-motion-generator/">perpetual motion machine</a>, or a source of free energy - some kind of contraption which does work without any external power source. Anyone with any physics background knows that this is impossible, due to the laws of thermodynamics, but these claims still find a small credulous audience. Normally the device is accompanied by lots of handwaving to obscure the fact that it can&rsquo;t possibly work.</p>
+<p>I&rsquo;ve recently noticed a number of crypto projects which are IMHO &lsquo;Financial Perpetual Motion Machines&rsquo;. They claim to produce free money, without any form of actual revenue. Perhaps because the laws of finance are not quite as clear-cut or widely understood as thermodynamics, these projects have gained more attention from speculators than they deserve.</p>
+<p>This is my attempt to explain <em>why</em> these projects are Financial Perpetual Motion Machines (FPMMs), using <a href="https://titano.finance/">Titano</a> as an example. There are many others like <a href="https://www.coingecko.com/en/coins/wonderland">Wonderland</a> or <a href="https://safuu.com/">Safuu</a> (which offers 383,000% interest!).</p>
+<h2 id="what-is-titano">What is Titano?</h2>
+<p>Titano says it is &ldquo;The Best Auto-Staking &amp; Auto-Compounding Protocol in Crypto&rdquo;, and advertises an eye-catching &ldquo;102,483% APY&rdquo;. You buy some Titano tokens, and like a bank they pay you interest - you get more tokens each day (in fact, every 30 minutes) that you continue to hold them. Unlike a bank, you get 100,000% interest, instead of about 1% for a savings account. This is so much interest that if you start with $1,000 of Titano and hold it for one year, you wind up with over $1,000,000. 😲 This sounds pretty good! Unfortunately, it is too good to be true, as we will see.</p>
+<h2 id="compound-interest">Compound interest</h2>
+<p>Our first red flag is just to do the math for a few years. Let&rsquo;s imagine you buy 1000 tokens and hold.</p>
+<table>
+<thead>
+<tr>
+<th>Year</th>
+<th>Tokens</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>1,000</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1,024,830</td>
+</tr>
+<tr>
+<td>2</td>
+<td>1,050,276,000</td>
+</tr>
+<tr>
+<td>3</td>
+<td>1,076,354,895,000</td>
+</tr>
+</tbody>
+</table>
+<p>In other words, you can be a token trillionaire in 3 short years! Does that sound plausible?</p>
+<h2 id="loans-and-interest">Loans and interest</h2>
+<p>More generally, say you have a great idea for a business, but no money right now. You can borrow money, and then when your great idea makes a profit, pay it back. This is the foundation of capitalism. However the person who lends you the money is taking a risk - maybe your idea isn&rsquo;t so hot after all - so they want interest. You have to pay back more than you borrowed. Lots of factors affect the interest rate, but risk is probably the biggest. This is why, unfairly enough, if you have a high credit rating and can pay back your credit card easily you get a lower rate than someone with a bad credit rating. If you have really bad credit you might only be able to get a predatory payday loan, which can have interest rates as high as 400% to 700% APR.</p>
+<p>Let&rsquo;s apply this to Titano. If we regard Titano as a business venture, by purchasing tokens you are making them a loan, and they are paying you interest on it. Surprisingly they are willing to pay interest <em>over 100 times higher than a payday loan</em>. This is our second red flag. Why would a borrower pay interest higher than they need to? I assume you would shop around for the best rate before taking out a mortgage. Are Titano offering this rate out of the kindness of their hearts, or because lending money to pseudonymous cryptobros without any kind of security is extremely risky?</p>
+<h2 id="revenue">Revenue</h2>
+<p>Assuming you are an honest business, your business plan must factor in making enough money to pay back the loans, including interest. If you have to pay 100% interest, any venture which makes less than 100% return over the same period is going to be a loss for you. Applying this to Titano, how do they make money?</p>
+<p><strong>The only current source of revenue is a cut whenever someone buys or sells Titano.</strong> This is red flag #3, and to my mind the real reason to regard this as financial perpetual motion. A real venture needs to make money: for example, by lending money to others, like a bank does, or by making cars and selling them. Titano only makes money as a side-effect of people speculating on Titano. There is a <a href="https://docs.titano.finance/roadmap">road map</a> but it doesn&rsquo;t look like a business plan which actually makes any money, let alone 100,000% ROI. It&rsquo;s worth recalling that no business in human history has produced that kind of return.</p>
+<h2 id="exchange-rates-and-inflation">Exchange rates and inflation</h2>
+<p>In the above discussion I assume that 1 Titano token has a constant price measured in &lsquo;real terms&rsquo;. (Feel free to quibble about how real the USD or the Euro are, if you like). This isn&rsquo;t true, of course. You can regard Titano as a foreign currency with a floating exchange rate vs USD.</p>
+<p>There is a way for Titano to pay 100,000% interest <em>denominated in Titano</em> without a corresponding 100,000% increase in the value of the underlying venture: inflation. This is the approach taken by economic powerhouses such as <a href="https://en.wikipedia.org/wiki/Hyperinflation_in_Zimbabwe">Zimbabwe</a> and <a href="https://en.wikipedia.org/wiki/Hyperinflation_in_the_Weimar_Republic">Weimar-era Germany</a>. If the supply of Titano increases 1000x but the value of Titano the project remains static, you could expect the value of each token to drop by 1000x.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>To assess the plausibility of a perpetual motion machine, it&rsquo;s easiest to go back to first principles: <em>where does the energy come from?</em>  If there&rsquo;s no clear explanation, it&rsquo;s baloney.</p>
+<p>To decide whether a financial &lsquo;innovation&rsquo; like Titano is a legitimate venture or a FPMM, it&rsquo;s easiest to go back to first principles: <em>where does the money come from?</em> If there&rsquo;s no clear explanation, this quickly makes it apparent there is nothing there. You can ignore all the waffle about treasuries, burns and risk-free value.</p>
 
   </div>
 
@@ -442,8 +431,8 @@
 
 <ul class="actions pagination">
     
-        <li><a href="/blog/weird_bugs/"
-                class="button big previous">Interesting issues encountered with the Azure Connected Machine Agent</a></li>
+        <li><a href="/blog/dao/"
+                class="button big previous">DAOn&#39;t believe the hype</a></li>
     
 
     
@@ -462,7 +451,7 @@
 
 
 <li>
-  <a href="//twitter.com/share?url=%2fblog%2fdao%2f&amp;text=DAOn%27t%20believe%20the%20hype&amp;via=snuffling" target="_blank" class="share-btn twitter">
+  <a href="//twitter.com/share?url=%2fblog%2fperpetual_motion%2f&amp;text=Financial%20Perpetual%20Motion&amp;via=snuffling" target="_blank" class="share-btn twitter">
     <i class="fa fa-twitter"></i>
     <p>Twitter</p>
     </a>
@@ -472,7 +461,7 @@
 
 
 <li>
-  <a href="//plus.google.com/share?url=%2fblog%2fdao%2f" target="_blank" class="share-btn google-plus">
+  <a href="//plus.google.com/share?url=%2fblog%2fperpetual_motion%2f" target="_blank" class="share-btn google-plus">
     <i class="fa fa-google-plus"></i>
     <p>Google+</p>
   </a>
@@ -483,7 +472,7 @@
 
 
 <li>
-  <a href="//www.facebook.com/sharer/sharer.php?u=%2fblog%2fdao%2f" target="_blank" class="share-btn facebook">
+  <a href="//www.facebook.com/sharer/sharer.php?u=%2fblog%2fperpetual_motion%2f" target="_blank" class="share-btn facebook">
     <i class="fa fa-facebook"></i>
     <p>Facebook</p>
     </a>
@@ -493,7 +482,7 @@
 
 
 <li>
-  <a href="//reddit.com/submit?url=%2fblog%2fdao%2f&amp;title=DAOn%27t%20believe%20the%20hype" target="_blank" class="share-btn reddit">
+  <a href="//reddit.com/submit?url=%2fblog%2fperpetual_motion%2f&amp;title=Financial%20Perpetual%20Motion" target="_blank" class="share-btn reddit">
     <i class="fa fa-reddit-alien"></i>
     <p>Reddit</p>
   </a>
@@ -503,7 +492,7 @@
 
 
 <li>
-  <a href="//www.linkedin.com/shareArticle?url=%2fblog%2fdao%2f&amp;title=DAOn%27t%20believe%20the%20hype" target="_blank" class="share-btn linkedin">
+  <a href="//www.linkedin.com/shareArticle?url=%2fblog%2fperpetual_motion%2f&amp;title=Financial%20Perpetual%20Motion" target="_blank" class="share-btn linkedin">
       <i class="fa fa-linkedin"></i>
       <p>LinkedIn</p>
     </a>
@@ -513,7 +502,7 @@
 
 
 <li>
-  <a href="//www.stumbleupon.com/submit?url=%2fblog%2fdao%2f&amp;title=DAOn%27t%20believe%20the%20hype" target="_blank" class="share-btn stumbleupon">
+  <a href="//www.stumbleupon.com/submit?url=%2fblog%2fperpetual_motion%2f&amp;title=Financial%20Perpetual%20Motion" target="_blank" class="share-btn stumbleupon">
     <i class="fa fa-stumbleupon"></i>
     <p>StumbleUpon</p>
   </a>
@@ -523,7 +512,7 @@
 
 
 <li>
-  <a href="//www.pinterest.com/pin/create/button/?url=%2fblog%2fdao%2f&amp;description=DAOn%27t%20believe%20the%20hype" target="_blank" class="share-btn pinterest">
+  <a href="//www.pinterest.com/pin/create/button/?url=%2fblog%2fperpetual_motion%2f&amp;description=Financial%20Perpetual%20Motion" target="_blank" class="share-btn pinterest">
     <i class="fa fa-pinterest-p"></i>
     <p>Pinterest</p>
   </a>
@@ -533,7 +522,7 @@
 
 
 <li>
-  <a href="mailto:?subject=Check out this post by Edwin%20Young&amp;body=%2fblog%2fdao%2f" target="_blank" class="share-btn email">
+  <a href="mailto:?subject=Check out this post by Edwin%20Young&amp;body=%2fblog%2fperpetual_motion%2f" target="_blank" class="share-btn email">
     <i class="fa fa-envelope"></i>
     <p>Email</p>
   </a>
@@ -655,6 +644,20 @@
           <article class="mini-post">
             <header>
               <h3>
+                <a href="/blog/perpetual_motion/">Financial Perpetual Motion</a>
+              </h3>
+              
+              <time class="published" datetime='2022-03-26'>
+                March 26, 2022
+              </time>
+            </header>
+            
+
+          </article>
+        
+          <article class="mini-post">
+            <header>
+              <h3>
                 <a href="/blog/dao/">DAOn&#39;t believe the hype</a>
               </h3>
               
@@ -702,20 +705,6 @@
               
               <time class="published" datetime='2021-05-25'>
                 May 25, 2021
-              </time>
-            </header>
-            
-
-          </article>
-        
-          <article class="mini-post">
-            <header>
-              <h3>
-                <a href="/blog/cloud_shell_auth/">Azure Cloud Shell, az login, and Managed Identity</a>
-              </h3>
-              
-              <time class="published" datetime='2021-03-19'>
-                March 19, 2021
               </time>
             </header>
             
@@ -809,6 +798,17 @@
           <article>
             <header>
               
+                <a href="/categories/crypto/">crypto</a>
+                <span style="float:right;">2</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
                 <a href="/categories/arc/">arc</a>
                 <span style="float:right;">1</span>
               
@@ -821,17 +821,6 @@
             <header>
               
                 <a href="/categories/azurearc/">azurearc</a>
-                <span style="float:right;">1</span>
-              
-            </header>
-          </article>
-        </p>
-        
-        <p>
-          <article>
-            <header>
-              
-                <a href="/categories/crypto/">crypto</a>
                 <span style="float:right;">1</span>
               
             </header>

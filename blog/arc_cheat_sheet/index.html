@@ -24,7 +24,7 @@
         "datePublished": "2020-09-22 17:11:06 -0700 PDT",
         "dateModified" : "2020-09-22 17:11:06 -0700 PDT",
         "url" : "\/blog\/arc_cheat_sheet\/",
-        "wordCount" : "268",
+        "wordCount" : "266",
         "keywords" : [ "AzureArc","azure","azcli","PowerShell","Blog" ]
     }
     </script>
@@ -83,7 +83,7 @@
 <meta itemprop="description" content="Examples of how to do basic things using the az cli and Azure PowerShell modules for Azure Arc for Servers">
 <meta itemprop="datePublished" content="2020-09-22T17:11:06-07:00" />
 <meta itemprop="dateModified" content="2020-09-22T17:11:06-07:00" />
-<meta itemprop="wordCount" content="268">
+<meta itemprop="wordCount" content="266">
 
 
 
@@ -247,6 +247,18 @@
                 
                         <article class="mini-post">
                             <header>
+                                <h3><a href="/blog/perpetual_motion/">Financial Perpetual Motion</a></h3>
+                                
+                                <time class="published" datetime=
+                                    '2022-03-26'>
+                                    March 26, 2022</time>
+                            </header>
+                            
+
+                        </article>
+                
+                        <article class="mini-post">
+                            <header>
                                 <h3><a href="/blog/dao/">DAOn&#39;t believe the hype</a></h3>
                                 
                                 <time class="published" datetime=
@@ -288,18 +300,6 @@
                                 <time class="published" datetime=
                                     '2021-05-25'>
                                     May 25, 2021</time>
-                            </header>
-                            
-
-                        </article>
-                
-                        <article class="mini-post">
-                            <header>
-                                <h3><a href="/blog/cloud_shell_auth/">Azure Cloud Shell, az login, and Managed Identity</a></h3>
-                                
-                                <time class="published" datetime=
-                                    '2021-03-19'>
-                                    March 19, 2021</time>
                             </header>
                             
 
@@ -457,29 +457,29 @@ However they are already functional and useful. Here&rsquo;s how to do some simp
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">Install-Module -Name Az.ConnectedMachine
 </code></pre></div><h2 id="list-machines">List machines</h2>
 <p>AZ CLI</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">az connectedmachine machine list
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">az connectedmachine list
 
 <span style="color:#75715e"># only display a few properties in a convenient form</span>
-az connectedmachine machine list --query <span style="color:#e6db74">&#34;[].{Name:name,ResourceGroup:resourceGroup,Location:location,Status:status}&#34;</span> -o table
+az connectedmachine list --query <span style="color:#e6db74">&#34;[].{Name:name,ResourceGroup:resourceGroup,Location:location,Status:status}&#34;</span> -o table
 </code></pre></div><p>Azure PowerShell:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">Get-AzConnectedMachine
 </code></pre></div><h2 id="list-extensions-installed-on-a-machine">List extensions installed on a machine</h2>
 <p>AZ CLI</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">az connectedmachine machine-extension list --resource-group edyoung --machine-name edwin-virtual-machine
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">az connectedmachine extension list --resource-group edyoung --machine-name edwin-virtual-machine
 </code></pre></div><p>Azure PowerShell:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">Get-AzConnectedMachineExtension -ResourceGroupName edyoung -MachineName edwin-virtual-machine
 </code></pre></div><h2 id="install-custom-script-extension-on-a-windows-machine-and-run-dir">Install Custom Script Extension on a windows machine and run &lsquo;dir&rsquo;</h2>
 <p>Note that installing extensions currently takes several minutes. Please be patient.</p>
 <p>AZ CLI run in bash</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># Note --location needs to be the location of the machine</span>
-az connectedmachine machine-extension create --machine-name silverbox-ne --resource-group edyoung --name myext --type <span style="color:#e6db74">&#34;CustomScriptExtension&#34;</span> --publisher <span style="color:#e6db74">&#34;Microsoft.Compute&#34;</span> --settings <span style="color:#e6db74">&#39;{&#34;commandToExecute&#34;:&#34;dir&#34;}&#39;</span> --location <span style="color:#e6db74">&#34;North Europe&#34;</span>
+az connectedmachine extension create --machine-name silverbox-ne --resource-group edyoung --name myext --type <span style="color:#e6db74">&#34;CustomScriptExtension&#34;</span> --publisher <span style="color:#e6db74">&#34;Microsoft.Compute&#34;</span> --settings <span style="color:#e6db74">&#39;{&#34;commandToExecute&#34;:&#34;dir&#34;}&#39;</span> --location <span style="color:#e6db74">&#34;North Europe&#34;</span>
 </code></pre></div><p>AZ CLI run inside PowerShell (the escaping is different for settings param)</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">az connectedmachine machine-extension create --machine-name silverbox<span style="color:#f92672">-ne</span> --resource-group edyoung --name myext --type <span style="color:#e6db74">&#34;CustomScriptExtension&#34;</span> --publisher <span style="color:#e6db74">&#34;Microsoft.Compute&#34;</span> --settings <span style="color:#e6db74">&#39;{\&#34;commandToExecute\&#34;:\&#34;dir\&#34;}&#39;</span> --location <span style="color:#e6db74">&#34;North Europe&#34;</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">az connectedmachine extension create --machine-name silverbox<span style="color:#f92672">-ne</span> --resource-group edyoung --name myext --type <span style="color:#e6db74">&#34;CustomScriptExtension&#34;</span> --publisher <span style="color:#e6db74">&#34;Microsoft.Compute&#34;</span> --settings <span style="color:#e6db74">&#39;{\&#34;commandToExecute\&#34;:\&#34;dir\&#34;}&#39;</span> --location <span style="color:#e6db74">&#34;North Europe&#34;</span>
 </code></pre></div><p>Azure PowerShell</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell"> New-AzConnectedMachineExtension -MachineName silverbox<span style="color:#f92672">-ne</span> -ResourceGroupName edyoung -Location <span style="color:#e6db74">&#34;North Europe&#34;</span> -Name myext -Setting <span style="color:#e6db74">&#39;{&#34;commandToExecute&#34;:&#34;dir&#34;}&#39;</span> -ExtensionType CustomScriptExtension -Publisher Microsoft.Compute
 </code></pre></div><h2 id="delete-an-extension">Delete an extension</h2>
 <p>AZ CLI</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">az connectedmachine machine-extension delete --name myext -g edyoung --machine-name silverbox-ne
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">az connectedmachine extension delete --name myext -g edyoung --machine-name silverbox-ne
 </code></pre></div><p>Azure PowerShell</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">Remove-AzConnectedMachineExtension -MachineName silverbox<span style="color:#f92672">-ne</span> -ResourceGroupName edyoung -Name myext
 </code></pre></div>
@@ -666,6 +666,20 @@ az connectedmachine machine-extension create --machine-name silverbox-ne --resou
           <article class="mini-post">
             <header>
               <h3>
+                <a href="/blog/perpetual_motion/">Financial Perpetual Motion</a>
+              </h3>
+              
+              <time class="published" datetime='2022-03-26'>
+                March 26, 2022
+              </time>
+            </header>
+            
+
+          </article>
+        
+          <article class="mini-post">
+            <header>
+              <h3>
                 <a href="/blog/dao/">DAOn&#39;t believe the hype</a>
               </h3>
               
@@ -713,20 +727,6 @@ az connectedmachine machine-extension create --machine-name silverbox-ne --resou
               
               <time class="published" datetime='2021-05-25'>
                 May 25, 2021
-              </time>
-            </header>
-            
-
-          </article>
-        
-          <article class="mini-post">
-            <header>
-              <h3>
-                <a href="/blog/cloud_shell_auth/">Azure Cloud Shell, az login, and Managed Identity</a>
-              </h3>
-              
-              <time class="published" datetime='2021-03-19'>
-                September 22, 2020
               </time>
             </header>
             
@@ -820,6 +820,17 @@ az connectedmachine machine-extension create --machine-name silverbox-ne --resou
           <article>
             <header>
               
+                <a href="/categories/crypto/">crypto</a>
+                <span style="float:right;">2</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
                 <a href="/categories/arc/">arc</a>
                 <span style="float:right;">1</span>
               
@@ -832,17 +843,6 @@ az connectedmachine machine-extension create --machine-name silverbox-ne --resou
             <header>
               
                 <a href="/categories/azurearc/">azurearc</a>
-                <span style="float:right;">1</span>
-              
-            </header>
-          </article>
-        </p>
-        
-        <p>
-          <article>
-            <header>
-              
-                <a href="/categories/crypto/">crypto</a>
                 <span style="float:right;">1</span>
               
             </header>
