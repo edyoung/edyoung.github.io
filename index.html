@@ -21,8 +21,8 @@
         "accountablePerson" : "",
         "copyrightHolder" : "",
         "copyrightYear" : "2022",
-        "datePublished": "2022-03-26 00:00:00 \x2b0000 UTC",
-        "dateModified" : "2022-03-26 00:00:00 \x2b0000 UTC",
+        "datePublished": "2022-04-24 00:00:00 \x2b0000 UTC",
+        "dateModified" : "2022-04-24 00:00:00 \x2b0000 UTC",
         "url" : "\/",
         "wordCount" : "0",
         "keywords" : [ "Blog" ]
@@ -72,7 +72,7 @@
 <meta property="og:description" content="Edwin Young&#39;s blog. Azure, Cloud Shell, PowerShell, Software Engineering" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="/" />
-<meta property="og:updated_time" content="2022-03-26T00:00:00+00:00" />
+<meta property="og:updated_time" content="2022-04-24T00:00:00+00:00" />
 
         <meta property="og:image" content="//images/logo.png">
         <meta property="og:image:type" content="image/png">
@@ -239,6 +239,18 @@
                 
                         <article class="mini-post">
                             <header>
+                                <h3><a href="/blog/deferred_maintenance/">Deferred Maintenance is a better metaphor than Technical Debt</a></h3>
+                                
+                                <time class="published" datetime=
+                                    '2022-04-24'>
+                                    April 24, 2022</time>
+                            </header>
+                            
+
+                        </article>
+                
+                        <article class="mini-post">
+                            <header>
                                 <h3><a href="/blog/perpetual_motion/">Financial Perpetual Motion</a></h3>
                                 
                                 <time class="published" datetime=
@@ -285,18 +297,6 @@
 
                         </article>
                 
-                        <article class="mini-post">
-                            <header>
-                                <h3><a href="/blog/cloud_shell_files/">How Azure Cloud Shell stores your files</a></h3>
-                                
-                                <time class="published" datetime=
-                                    '2021-05-25'>
-                                    May 25, 2021</time>
-                            </header>
-                            
-
-                        </article>
-                
 
                 
                     <a href=
@@ -319,21 +319,21 @@
   <header>
     <div class="title">
         
-            <h2><a href="/blog/perpetual_motion/">Financial Perpetual Motion</a></h2>
+            <h2><a href="/blog/deferred_maintenance/">Deferred Maintenance is a better metaphor than Technical Debt</a></h2>
         
         
-            <p>Reasons to be skeptical of certain crypto projects</p>
+            <p>Software Engineering Metaphors debated</p>
         
     </div>
     <div class="meta">
         
 
         <time class="published"
-            datetime='2022-03-26'>
-            January 8, 2022</time>
+            datetime='2022-04-24'>
+            April 24, 2022</time>
         <span class="author">Edwin Young</span>
         
-            <p>5 minute read</p>
+            <p>2 minute read</p>
         
         
     </div>
@@ -345,53 +345,13 @@
   
 
   <div id="content">
-    <h1 id="financial-perpetual-motion">Financial Perpetual Motion</h1>
-<p>Every so often, someone claims to have created a <a href="https://newspunch.com/incredible-scientist-makes-free-energy-perpetual-motion-generator/">perpetual motion machine</a>, or a source of free energy - some kind of contraption which does work without any external power source. Anyone with any physics background knows that this is impossible, due to the laws of thermodynamics, but these claims still find a small credulous audience. Normally the device is accompanied by lots of handwaving to obscure the fact that it can&rsquo;t possibly work.</p>
-<p>I&rsquo;ve recently noticed a number of crypto projects which are IMHO &lsquo;Financial Perpetual Motion Machines&rsquo;. They claim to produce free money, without any form of actual revenue. Perhaps because the laws of finance are not quite as clear-cut or widely understood as thermodynamics, these projects have gained more attention from speculators than they deserve.</p>
-<p>This is my attempt to explain <em>why</em> these projects are Financial Perpetual Motion Machines (FPMMs), using <a href="https://titano.finance/">Titano</a> as an example. There are many others like <a href="https://www.coingecko.com/en/coins/wonderland">Wonderland</a> or <a href="https://safuu.com/">Safuu</a> (which offers 383,000% interest!).</p>
-<h2 id="what-is-titano">What is Titano?</h2>
-<p>Titano says it is &ldquo;The Best Auto-Staking &amp; Auto-Compounding Protocol in Crypto&rdquo;, and advertises an eye-catching &ldquo;102,483% APY&rdquo;. You buy some Titano tokens, and like a bank they pay you interest - you get more tokens each day (in fact, every 30 minutes) that you continue to hold them. Unlike a bank, you get 100,000% interest, instead of about 1% for a savings account. This is so much interest that if you start with $1,000 of Titano and hold it for one year, you wind up with over $1,000,000. 😲 This sounds pretty good! Unfortunately, it is too good to be true, as we will see.</p>
-<h2 id="compound-interest">Compound interest</h2>
-<p>Our first red flag is just to do the math for a few years. Let&rsquo;s imagine you buy 1000 tokens and hold.</p>
-<table>
-<thead>
-<tr>
-<th>Year</th>
-<th>Tokens</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>0</td>
-<td>1,000</td>
-</tr>
-<tr>
-<td>1</td>
-<td>1,024,830</td>
-</tr>
-<tr>
-<td>2</td>
-<td>1,050,276,000</td>
-</tr>
-<tr>
-<td>3</td>
-<td>1,076,354,895,000</td>
-</tr>
-</tbody>
-</table>
-<p>In other words, you can be a token trillionaire in 3 short years! Does that sound plausible?</p>
-<h2 id="loans-and-interest">Loans and interest</h2>
-<p>More generally, say you have a great idea for a business, but no money right now. You can borrow money, and then when your great idea makes a profit, pay it back. This is the foundation of capitalism. However the person who lends you the money is taking a risk - maybe your idea isn&rsquo;t so hot after all - so they want interest. You have to pay back more than you borrowed. Lots of factors affect the interest rate, but risk is probably the biggest. This is why, unfairly enough, if you have a high credit rating and can pay back your credit card easily you get a lower rate than someone with a bad credit rating. If you have really bad credit you might only be able to get a predatory payday loan, which can have interest rates as high as 400% to 700% APR.</p>
-<p>Let&rsquo;s apply this to Titano. If we regard Titano as a business venture, by purchasing tokens you are making them a loan, and they are paying you interest on it. Surprisingly they are willing to pay interest <em>over 100 times higher than a payday loan</em>. This is our second red flag. Why would a borrower pay interest higher than they need to? I assume you would shop around for the best rate before taking out a mortgage. Are Titano offering this rate out of the kindness of their hearts, or because lending money to pseudonymous cryptobros without any kind of security is extremely risky?</p>
-<h2 id="revenue">Revenue</h2>
-<p>Assuming you are an honest business, your business plan must factor in making enough money to pay back the loans, including interest. If you have to pay 100% interest, any venture which makes less than 100% return over the same period is going to be a loss for you. Applying this to Titano, how do they make money?</p>
-<p><strong>The only current source of revenue is a cut whenever someone buys or sells Titano.</strong> This is red flag #3, and to my mind the real reason to regard this as financial perpetual motion. A real venture needs to make money: for example, by lending money to others, like a bank does, or by making cars and selling them. Titano only makes money as a side-effect of people speculating on Titano. There is a <a href="https://docs.titano.finance/roadmap">road map</a> but it doesn&rsquo;t look like a business plan which actually makes any money, let alone 100,000% ROI. It&rsquo;s worth recalling that no business in human history has produced that kind of return.</p>
-<h2 id="exchange-rates-and-inflation">Exchange rates and inflation</h2>
-<p>In the above discussion I assume that 1 Titano token has a constant price measured in &lsquo;real terms&rsquo;. (Feel free to quibble about how real the USD or the Euro are, if you like). This isn&rsquo;t true, of course. You can regard Titano as a foreign currency with a floating exchange rate vs USD.</p>
-<p>There is a way for Titano to pay 100,000% interest <em>denominated in Titano</em> without a corresponding 100,000% increase in the value of the underlying venture: inflation. This is the approach taken by economic powerhouses such as <a href="https://en.wikipedia.org/wiki/Hyperinflation_in_Zimbabwe">Zimbabwe</a> and <a href="https://en.wikipedia.org/wiki/Hyperinflation_in_the_Weimar_Republic">Weimar-era Germany</a>. If the supply of Titano increases 1000x but the value of Titano the project remains static, you could expect the value of each token to drop by 1000x.</p>
-<h2 id="conclusion">Conclusion</h2>
-<p>To assess the plausibility of a perpetual motion machine, it&rsquo;s easiest to go back to first principles: <em>where does the energy come from?</em>  If there&rsquo;s no clear explanation, it&rsquo;s baloney.</p>
-<p>To decide whether a financial &lsquo;innovation&rsquo; like Titano is a legitimate venture or a FPMM, it&rsquo;s easiest to go back to first principles: <em>where does the money come from?</em> If there&rsquo;s no clear explanation, this quickly makes it apparent there is nothing there. You can ignore all the waffle about treasuries, burns and risk-free value.</p>
+    <p>There&rsquo;s a lot of discussion about Technical Debt in Software Engineering. I believe the term originated <a href="http://wiki.c2.com/?TechnicalDebt">on the C2 wiki</a>. It&rsquo;s often used to explain to non-software-engineers why it&rsquo;s important to invest in code quality.</p>
+<p>I&rsquo;m far from the first person to think that the term Technical Debt is potentially misleading. Rob Jeffries has a discussion <a href="https://ronjeffries.com/articles/015-11/tech-debt/">here</a>.</p>
+<p>To oversimplify, debt involves interest payments. These compound over time, occur at predictable intervals, can be paid off, and cost a fairly predictable amount of money. None of these are true when you decide to take shortcuts in software: the passage of time has no direct compounding effect, and you don&rsquo;t know when the bill will come due or how expensive it will be.</p>
+<p>This mismatch between the term and the implications can be a problem if it conveys the wrong impression to our non-software colleague.</p>
+<p>I like the term <em>deferred maintenance</em> better. This is also an inexact metaphor but I think it&rsquo;s closer. Anyone who has owned a car understands that it needs maintenance. If you don&rsquo;t change the oil at regular intervals, the car will gradually run more slowly and roughly. Eventually, at an upredictable time, the engine will seize up and you&rsquo;ll be faced with a large and unpredictable bill to replace the entire thing. If you don&rsquo;t service the brakes, the results can be significantly worse. (Consider a 747 instead of a Corolla if you really want to emphasize the importance of maintenance.)</p>
+<p>You can extend this notion to help justify the idea of scheduling time explicitly for maintenance activity, like a monthly or quarterly &lsquo;tune-up&rsquo;.</p>
+<p>Bottom line: if you have a large piece of software which is not maintained, you own a very complicated machine which is not performing as well as it could, and might break down at any point.</p>
 
   </div>
 
@@ -405,7 +365,7 @@
                 <i class="fa fa-folder"></i>
                 
                 
-                <li><a class="article-category-link" href="/categories/crypto">Crypto</a></li>
+                <li><a class="article-category-link" href="/categories/software">Software</a></li>
                 
             
         
@@ -431,8 +391,8 @@
 
 <ul class="actions pagination">
     
-        <li><a href="/blog/dao/"
-                class="button big previous">DAOn&#39;t believe the hype</a></li>
+        <li><a href="/blog/perpetual_motion/"
+                class="button big previous">Financial Perpetual Motion</a></li>
     
 
     
@@ -451,7 +411,7 @@
 
 
 <li>
-  <a href="//twitter.com/share?url=%2fblog%2fperpetual_motion%2f&amp;text=Financial%20Perpetual%20Motion&amp;via=snuffling" target="_blank" class="share-btn twitter">
+  <a href="//twitter.com/share?url=%2fblog%2fdeferred_maintenance%2f&amp;text=Deferred%20Maintenance%20is%20a%20better%20metaphor%20than%20Technical%20Debt&amp;via=snuffling" target="_blank" class="share-btn twitter">
     <i class="fa fa-twitter"></i>
     <p>Twitter</p>
     </a>
@@ -461,7 +421,7 @@
 
 
 <li>
-  <a href="//plus.google.com/share?url=%2fblog%2fperpetual_motion%2f" target="_blank" class="share-btn google-plus">
+  <a href="//plus.google.com/share?url=%2fblog%2fdeferred_maintenance%2f" target="_blank" class="share-btn google-plus">
     <i class="fa fa-google-plus"></i>
     <p>Google+</p>
   </a>
@@ -472,7 +432,7 @@
 
 
 <li>
-  <a href="//www.facebook.com/sharer/sharer.php?u=%2fblog%2fperpetual_motion%2f" target="_blank" class="share-btn facebook">
+  <a href="//www.facebook.com/sharer/sharer.php?u=%2fblog%2fdeferred_maintenance%2f" target="_blank" class="share-btn facebook">
     <i class="fa fa-facebook"></i>
     <p>Facebook</p>
     </a>
@@ -482,7 +442,7 @@
 
 
 <li>
-  <a href="//reddit.com/submit?url=%2fblog%2fperpetual_motion%2f&amp;title=Financial%20Perpetual%20Motion" target="_blank" class="share-btn reddit">
+  <a href="//reddit.com/submit?url=%2fblog%2fdeferred_maintenance%2f&amp;title=Deferred%20Maintenance%20is%20a%20better%20metaphor%20than%20Technical%20Debt" target="_blank" class="share-btn reddit">
     <i class="fa fa-reddit-alien"></i>
     <p>Reddit</p>
   </a>
@@ -492,7 +452,7 @@
 
 
 <li>
-  <a href="//www.linkedin.com/shareArticle?url=%2fblog%2fperpetual_motion%2f&amp;title=Financial%20Perpetual%20Motion" target="_blank" class="share-btn linkedin">
+  <a href="//www.linkedin.com/shareArticle?url=%2fblog%2fdeferred_maintenance%2f&amp;title=Deferred%20Maintenance%20is%20a%20better%20metaphor%20than%20Technical%20Debt" target="_blank" class="share-btn linkedin">
       <i class="fa fa-linkedin"></i>
       <p>LinkedIn</p>
     </a>
@@ -502,7 +462,7 @@
 
 
 <li>
-  <a href="//www.stumbleupon.com/submit?url=%2fblog%2fperpetual_motion%2f&amp;title=Financial%20Perpetual%20Motion" target="_blank" class="share-btn stumbleupon">
+  <a href="//www.stumbleupon.com/submit?url=%2fblog%2fdeferred_maintenance%2f&amp;title=Deferred%20Maintenance%20is%20a%20better%20metaphor%20than%20Technical%20Debt" target="_blank" class="share-btn stumbleupon">
     <i class="fa fa-stumbleupon"></i>
     <p>StumbleUpon</p>
   </a>
@@ -512,7 +472,7 @@
 
 
 <li>
-  <a href="//www.pinterest.com/pin/create/button/?url=%2fblog%2fperpetual_motion%2f&amp;description=Financial%20Perpetual%20Motion" target="_blank" class="share-btn pinterest">
+  <a href="//www.pinterest.com/pin/create/button/?url=%2fblog%2fdeferred_maintenance%2f&amp;description=Deferred%20Maintenance%20is%20a%20better%20metaphor%20than%20Technical%20Debt" target="_blank" class="share-btn pinterest">
     <i class="fa fa-pinterest-p"></i>
     <p>Pinterest</p>
   </a>
@@ -522,7 +482,7 @@
 
 
 <li>
-  <a href="mailto:?subject=Check out this post by Edwin%20Young&amp;body=%2fblog%2fperpetual_motion%2f" target="_blank" class="share-btn email">
+  <a href="mailto:?subject=Check out this post by Edwin%20Young&amp;body=%2fblog%2fdeferred_maintenance%2f" target="_blank" class="share-btn email">
     <i class="fa fa-envelope"></i>
     <p>Email</p>
   </a>
@@ -644,6 +604,20 @@
           <article class="mini-post">
             <header>
               <h3>
+                <a href="/blog/deferred_maintenance/">Deferred Maintenance is a better metaphor than Technical Debt</a>
+              </h3>
+              
+              <time class="published" datetime='2022-04-24'>
+                April 24, 2022
+              </time>
+            </header>
+            
+
+          </article>
+        
+          <article class="mini-post">
+            <header>
+              <h3>
                 <a href="/blog/perpetual_motion/">Financial Perpetual Motion</a>
               </h3>
               
@@ -691,20 +665,6 @@
               
               <time class="published" datetime='2021-10-12'>
                 October 12, 2021
-              </time>
-            </header>
-            
-
-          </article>
-        
-          <article class="mini-post">
-            <header>
-              <h3>
-                <a href="/blog/cloud_shell_files/">How Azure Cloud Shell stores your files</a>
-              </h3>
-              
-              <time class="published" datetime='2021-05-25'>
-                May 25, 2021
               </time>
             </header>
             
@@ -821,6 +781,17 @@
             <header>
               
                 <a href="/categories/azurearc/">azurearc</a>
+                <span style="float:right;">1</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/software/">software</a>
                 <span style="float:right;">1</span>
               
             </header>
