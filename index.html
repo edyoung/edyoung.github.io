@@ -441,14 +441,7 @@ configmap:
     }
 }
 </code></pre></div><p>This is about the same amount of boilerplate, but I prefer this version. It removes an entire tool (T4) from the toolchain and simplifies the dependencies; I can step through the code trivially if needed; syntax highlighting and Intellisense work normally.</p>
-<p>More importantly, I think the actual core replacement syntax is cleaner. C# string interpolation in raw string literals is powerful enough to do all the things we were using in in T4, it&rsquo;s clear, easy to read, and familiar for C# developers.</p>
-<p>$&rdquo;&rdquo;&rdquo;
-configmap:
-Environment: &ldquo;{deployment.Environment}&rdquo;
-Location: &ldquo;{deployment.LocationName}&rdquo;
-CloudEnvironment: &ldquo;{deployment.CloudEnvironment}&rdquo;
-UseKeyVault: true
-&quot;&rdquo;&rdquo;</p>
+<p>More importantly, I think the actual core replacement syntax is cleaner. C# string interpolation in raw string literals is powerful enough to do all the things we were using in T4, it&rsquo;s clear, easy to read, and familiar for C# developers.</p>
 
   </div>
 
