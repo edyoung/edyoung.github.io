@@ -21,8 +21,8 @@
         "accountablePerson" : "",
         "copyrightHolder" : "",
         "copyrightYear" : "2022",
-        "datePublished": "2022-04-24 00:00:00 \x2b0000 UTC",
-        "dateModified" : "2022-04-24 00:00:00 \x2b0000 UTC",
+        "datePublished": "2022-05-28 00:00:00 \x2b0000 UTC",
+        "dateModified" : "2022-05-28 00:00:00 \x2b0000 UTC",
         "url" : "\/",
         "wordCount" : "0",
         "keywords" : [ "Blog" ]
@@ -72,7 +72,7 @@
 <meta property="og:description" content="Edwin Young&#39;s blog. Azure, Cloud Shell, PowerShell, Software Engineering" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="/" />
-<meta property="og:updated_time" content="2022-04-24T00:00:00+00:00" />
+<meta property="og:updated_time" content="2022-05-28T00:00:00+00:00" />
 
         <meta property="og:image" content="//images/logo.png">
         <meta property="og:image:type" content="image/png">
@@ -239,6 +239,18 @@
                 
                         <article class="mini-post">
                             <header>
+                                <h3><a href="/blog/no_template/">Replacing T4 Templates with plain C# 11</a></h3>
+                                
+                                <time class="published" datetime=
+                                    '2022-05-28'>
+                                    May 28, 2022</time>
+                            </header>
+                            
+
+                        </article>
+                
+                        <article class="mini-post">
+                            <header>
                                 <h3><a href="/blog/deferred_maintenance/">Deferred Maintenance is a better metaphor than Technical Debt</a></h3>
                                 
                                 <time class="published" datetime=
@@ -285,18 +297,6 @@
 
                         </article>
                 
-                        <article class="mini-post">
-                            <header>
-                                <h3><a href="/blog/vars/">Some environment vars in Cloud Shell</a></h3>
-                                
-                                <time class="published" datetime=
-                                    '2021-10-12'>
-                                    October 12, 2021</time>
-                            </header>
-                            
-
-                        </article>
-                
 
                 
                     <a href=
@@ -319,21 +319,21 @@
   <header>
     <div class="title">
         
-            <h2><a href="/blog/deferred_maintenance/">Deferred Maintenance is a better metaphor than Technical Debt</a></h2>
+            <h2><a href="/blog/no_template/">Replacing T4 Templates with plain C# 11</a></h2>
         
         
-            <p>Software Engineering Metaphors debated</p>
+            <p>Maybe you don&#39;t need a template library?</p>
         
     </div>
     <div class="meta">
         
 
         <time class="published"
-            datetime='2022-04-24'>
-            April 24, 2022</time>
+            datetime='2022-05-28'>
+            May 28, 2022</time>
         <span class="author">Edwin Young</span>
         
-            <p>2 minute read</p>
+            <p>3 minute read</p>
         
         
     </div>
@@ -345,13 +345,110 @@
   
 
   <div id="content">
-    <p>There&rsquo;s a lot of discussion about Technical Debt in Software Engineering. I believe the term originated <a href="http://wiki.c2.com/?TechnicalDebt">on the C2 wiki</a>. It&rsquo;s often used to explain to non-software-engineers why it&rsquo;s important to invest in code quality.</p>
-<p>I&rsquo;m far from the first person to think that the term Technical Debt is potentially misleading. Rob Jeffries has a discussion <a href="https://ronjeffries.com/articles/015-11/tech-debt/">here</a>.</p>
-<p>To oversimplify, debt involves interest payments. These compound over time, occur at predictable intervals, can be paid off, and cost a fairly predictable amount of money. None of these are true when you decide to take shortcuts in software: the passage of time has no direct compounding effect, and you don&rsquo;t know when the bill will come due or how expensive it will be.</p>
-<p>This mismatch between the term and the implications can be a problem if it conveys the wrong impression to our non-software colleague.</p>
-<p>I like the term <em>deferred maintenance</em> better. This is also an inexact metaphor but I think it&rsquo;s closer. Anyone who has owned a car understands that it needs maintenance. If you don&rsquo;t change the oil at regular intervals, the car will gradually run more slowly and roughly. Eventually, at an upredictable time, the engine will seize up and you&rsquo;ll be faced with a large and unpredictable bill to replace the entire thing. If you don&rsquo;t service the brakes, the results can be significantly worse. (Consider a 747 instead of a Corolla if you really want to emphasize the importance of maintenance.)</p>
-<p>You can extend this notion to help justify the idea of scheduling time explicitly for maintenance activity, like a monthly or quarterly &lsquo;tune-up&rsquo;.</p>
-<p>Bottom line: if you have a large piece of software which is not maintained, you own a very complicated machine which is not performing as well as it could, and might break down at any point.</p>
+    <h1 id="replacing-t4-templates-with-plain-c-11">Replacing T4 Templates with plain C# 11</h1>
+<h2 id="generating-files-with-t4">Generating files with T4</h2>
+<p>In Arc-Enabled Servers we have a quite a lot of different config files which need to be mostly the same, but a little different for each region we deploy into. For example, we have values that are used by Helm charts for each region:</p>
+<h3 id="australia-east">Australia East</h3>
+<pre><code>configmap:
+  Environment: Prod
+  Location: &quot;australiaeast&quot;
+  CloudEnvironment: &quot;Public&quot;
+  UseKeyVault: true
+  ...
+</code></pre><h3 id="brazil-south">Brazil South</h3>
+<pre><code>configmap:
+  Environment: Prod
+  Location: &quot;brazilsouth&quot;
+  CloudEnvironment: &quot;Public&quot;
+  UseKeyVault: true
+  ...
+</code></pre><p>We don&rsquo;t want to manually maintain this for every region, so we have a <a href="https://docs.microsoft.com/en-us/visualstudio/modeling/code-generation-and-t4-text-templates?view=vs-2022">T4 Template</a> which is run to generate these files. Looks something like this:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C#" data-lang="C#">&lt;<span style="color:#960050;background-color:#1e0010">#@</span> template language=<span style="color:#e6db74">&#34;C#&#34;</span> hostspecific=<span style="color:#e6db74">&#34;true&#34;</span> <span style="color:#960050;background-color:#1e0010">#</span>&gt;
+&lt;<span style="color:#960050;background-color:#1e0010">#@</span> include file=<span style="color:#e6db74">&#34;MultiOutput.ttinclude&#34;</span> <span style="color:#960050;background-color:#1e0010">#</span>&gt;
+&lt;<span style="color:#960050;background-color:#1e0010">#@</span> assembly name=<span style="color:#e6db74">&#34;System.Core&#34;</span> <span style="color:#960050;background-color:#1e0010">#</span>&gt;
+&lt;<span style="color:#960050;background-color:#1e0010">#@</span> import namespace=<span style="color:#e6db74">&#34;System.Linq&#34;</span> <span style="color:#960050;background-color:#1e0010">#</span>&gt;
+&lt;<span style="color:#960050;background-color:#1e0010">#@</span> import namespace=<span style="color:#e6db74">&#34;Deployment&#34;</span> <span style="color:#960050;background-color:#1e0010">#</span>&gt;
+&lt;<span style="color:#960050;background-color:#1e0010">#@</span> import namespace=<span style="color:#e6db74">&#34;Deployment.Models.Kubernetes&#34;</span> <span style="color:#960050;background-color:#1e0010">#</span>&gt;
+&lt;<span style="color:#960050;background-color:#1e0010">#@</span> assembly name=<span style="color:#e6db74">&#34;Deployment.dll&#34;</span> <span style="color:#960050;background-color:#1e0010">#</span>&gt;
+&lt;<span style="color:#960050;background-color:#1e0010">#</span>
+<span style="color:#66d9ef">foreach</span> (<span style="color:#66d9ef">var</span> environmentConfig <span style="color:#66d9ef">in</span> KubernetesDeploymentInfo.AllEnvironments) 
+{
+    <span style="color:#66d9ef">var</span> cloudWideConfig = environmentConfig.Value.Item1;
+    <span style="color:#66d9ef">var</span> regions = environmentConfig.Value.Item2;
+    <span style="color:#66d9ef">foreach</span> (<span style="color:#66d9ef">var</span> deployment <span style="color:#66d9ef">in</span> regions)
+    {
+        ClearOutput();
+
+        <span style="color:#66d9ef">var</span> valuesFileName = deployment.ValuesFileName;
+        <span style="color:#66d9ef">var</span> outputPath = <span style="color:#e6db74">&#34;deployment\\charts\\certmgmtservice\\cmsfrontend&#34;</span>;
+<span style="color:#960050;background-color:#1e0010">#</span>&gt;
+
+configmap:
+  Environment: <span style="color:#e6db74">&#34;&lt;#= deployment.Environment #&gt;&#34;</span>
+  Location: <span style="color:#e6db74">&#34;&lt;#= deployment.LocationName #&gt;&#34;</span>
+  CloudEnvironment: <span style="color:#e6db74">&#34;&lt;#= deployment.CloudEnvironment #&gt;&#34;</span>
+  UseKeyVault: <span style="color:#66d9ef">true</span>
+
+&lt;<span style="color:#960050;background-color:#1e0010">#</span>
+        SaveOutput(outputPath, valuesFileName, addToProject: <span style="color:#66d9ef">false</span>);
+    }
+}
+<span style="color:#960050;background-color:#1e0010">#</span>&gt;
+</code></pre></div><p>NB These are snippets to illustrate the approach, you won&rsquo;t be able to run them as-is. The real config files are quite a bit longer.</p>
+<p>Anything in <code>&lt;# #&gt;</code> is C# code, everything else is text which is echoed to the output when the template is run. Deployment.dll contains C# data structures which define things like the list of all known regions, and the names of each one.</p>
+<p>This works OK, but I have some gripes:</p>
+<ul>
+<li>We use .NET 6 exclusively, but T4 is stuck in .NET Framework land. We would up moving to mono.texttemplating for .NET Core support</li>
+<li>It&rsquo;s just not all that easy to read</li>
+<li>Debugging and developing the template code is a bit more of a hassle than regular code.</li>
+</ul>
+<h2 id="generating-with-c-11">Generating with C# 11</h2>
+<p>I spent a bit of time looking at other templating solutions before thinking: The template is a text file with bits of embedded C#. What if instead we had a C# file with embedded text?</p>
+<p>With the introduction of <a href="https://devblogs.microsoft.com/dotnet/csharp-11-preview-updates/#raw-string-literals">raw string literals</a> this is a lot cleaner than it was. These are preview functionality at the time of writing, but since my use case only runs at build time, I&rsquo;m not too worried about that. A C# program which does the equivalent of the template above looks like:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C#" data-lang="C#"><span style="color:#66d9ef">using</span> Ev2Deploy.Deployment;
+<span style="color:#66d9ef">using</span> System.IO;
+<span style="color:#66d9ef">using</span> System.Text;
+
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">cmsfrontend</span>
+{
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> Generate(<span style="color:#66d9ef">string</span> rootpath)
+    {
+        <span style="color:#66d9ef">foreach</span> (<span style="color:#66d9ef">var</span> environmentConfig <span style="color:#66d9ef">in</span> KubernetesDeploymentInfo.AllEnvironments)
+        {
+            <span style="color:#66d9ef">var</span> cloudWideConfig = environmentConfig.Value.Item1;
+            <span style="color:#66d9ef">var</span> regions = environmentConfig.Value.Item2;
+            <span style="color:#66d9ef">foreach</span> (<span style="color:#66d9ef">var</span> deployment <span style="color:#66d9ef">in</span> regions)
+            {                
+                <span style="color:#66d9ef">var</span> valuesFileName = deployment.ValuesFileName;
+                <span style="color:#66d9ef">var</span> outputPath = <span style="color:#e6db74">&#34;deployment\\charts\\certmgmtservice\\cmsfrontend&#34;</span>;
+                
+                vat outputFile = Path.Combine(rootpath, outputPath, valuesFileName)
+                <span style="color:#66d9ef">using</span> var output = <span style="color:#66d9ef">new</span> StreamWriter(outputFile, <span style="color:#66d9ef">false</span>, Encoding.UTF8);
+
+                output.Write(<span style="color:#e6db74">$&#34;&#34;&#34;
+</span><span style="color:#e6db74">                    configmap:
+</span><span style="color:#e6db74">                        Environment: &#34;</span>{deployment.Environment}<span style="color:#e6db74">&#34;
+</span><span style="color:#e6db74"></span>                        Location: <span style="color:#e6db74">&#34;{deployment.LocationName}&#34;</span>
+                        CloudEnvironment: <span style="color:#e6db74">&#34;{deployment.CloudEnvironment}&#34;</span>
+                        UseKeyVault: <span style="color:#66d9ef">true</span>
+                    <span style="color:#e6db74">&#34;&#34;&#34;);
+</span><span style="color:#e6db74"></span>            }
+        }
+    }
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> Main()
+    {
+        Generate(<span style="color:#e6db74">&#34;out&#34;</span>);
+    }
+}
+</code></pre></div><p>This is about the same amount of boilerplate, but I prefer this version. It removes an entire tool (T4) from the toolchain and simplifies the dependencies; I can step through the code trivially if needed; syntax highlighting and Intellisense work normally.</p>
+<p>More importantly, I think the actual core replacement syntax is cleaner. C# string interpolation in raw string literals is powerful enough to do all the things we were using in in T4, it&rsquo;s clear, easy to read, and familiar for C# developers.</p>
+<p>$&rdquo;&rdquo;&rdquo;
+configmap:
+Environment: &ldquo;{deployment.Environment}&rdquo;
+Location: &ldquo;{deployment.LocationName}&rdquo;
+CloudEnvironment: &ldquo;{deployment.CloudEnvironment}&rdquo;
+UseKeyVault: true
+&quot;&rdquo;&rdquo;</p>
 
   </div>
 
@@ -365,7 +462,13 @@
                 <i class="fa fa-folder"></i>
                 
                 
-                <li><a class="article-category-link" href="/categories/software">Software</a></li>
+                <li><a class="article-category-link" href="/categories/c">C#</a></li>
+                
+                
+                <li><a class="article-category-link" href="/categories/t4">T4</a></li>
+                
+                
+                <li><a class="article-category-link" href="/categories/template">Template</a></li>
                 
             
         
@@ -391,8 +494,8 @@
 
 <ul class="actions pagination">
     
-        <li><a href="/blog/perpetual_motion/"
-                class="button big previous">Financial Perpetual Motion</a></li>
+        <li><a href="/blog/deferred_maintenance/"
+                class="button big previous">Deferred Maintenance is a better metaphor than Technical Debt</a></li>
     
 
     
@@ -411,7 +514,7 @@
 
 
 <li>
-  <a href="//twitter.com/share?url=%2fblog%2fdeferred_maintenance%2f&amp;text=Deferred%20Maintenance%20is%20a%20better%20metaphor%20than%20Technical%20Debt&amp;via=snuffling" target="_blank" class="share-btn twitter">
+  <a href="//twitter.com/share?url=%2fblog%2fno_template%2f&amp;text=Replacing%20T4%20Templates%20with%20plain%20C%23%2011&amp;via=snuffling" target="_blank" class="share-btn twitter">
     <i class="fa fa-twitter"></i>
     <p>Twitter</p>
     </a>
@@ -421,7 +524,7 @@
 
 
 <li>
-  <a href="//plus.google.com/share?url=%2fblog%2fdeferred_maintenance%2f" target="_blank" class="share-btn google-plus">
+  <a href="//plus.google.com/share?url=%2fblog%2fno_template%2f" target="_blank" class="share-btn google-plus">
     <i class="fa fa-google-plus"></i>
     <p>Google+</p>
   </a>
@@ -432,7 +535,7 @@
 
 
 <li>
-  <a href="//www.facebook.com/sharer/sharer.php?u=%2fblog%2fdeferred_maintenance%2f" target="_blank" class="share-btn facebook">
+  <a href="//www.facebook.com/sharer/sharer.php?u=%2fblog%2fno_template%2f" target="_blank" class="share-btn facebook">
     <i class="fa fa-facebook"></i>
     <p>Facebook</p>
     </a>
@@ -442,7 +545,7 @@
 
 
 <li>
-  <a href="//reddit.com/submit?url=%2fblog%2fdeferred_maintenance%2f&amp;title=Deferred%20Maintenance%20is%20a%20better%20metaphor%20than%20Technical%20Debt" target="_blank" class="share-btn reddit">
+  <a href="//reddit.com/submit?url=%2fblog%2fno_template%2f&amp;title=Replacing%20T4%20Templates%20with%20plain%20C%23%2011" target="_blank" class="share-btn reddit">
     <i class="fa fa-reddit-alien"></i>
     <p>Reddit</p>
   </a>
@@ -452,7 +555,7 @@
 
 
 <li>
-  <a href="//www.linkedin.com/shareArticle?url=%2fblog%2fdeferred_maintenance%2f&amp;title=Deferred%20Maintenance%20is%20a%20better%20metaphor%20than%20Technical%20Debt" target="_blank" class="share-btn linkedin">
+  <a href="//www.linkedin.com/shareArticle?url=%2fblog%2fno_template%2f&amp;title=Replacing%20T4%20Templates%20with%20plain%20C%23%2011" target="_blank" class="share-btn linkedin">
       <i class="fa fa-linkedin"></i>
       <p>LinkedIn</p>
     </a>
@@ -462,7 +565,7 @@
 
 
 <li>
-  <a href="//www.stumbleupon.com/submit?url=%2fblog%2fdeferred_maintenance%2f&amp;title=Deferred%20Maintenance%20is%20a%20better%20metaphor%20than%20Technical%20Debt" target="_blank" class="share-btn stumbleupon">
+  <a href="//www.stumbleupon.com/submit?url=%2fblog%2fno_template%2f&amp;title=Replacing%20T4%20Templates%20with%20plain%20C%23%2011" target="_blank" class="share-btn stumbleupon">
     <i class="fa fa-stumbleupon"></i>
     <p>StumbleUpon</p>
   </a>
@@ -472,7 +575,7 @@
 
 
 <li>
-  <a href="//www.pinterest.com/pin/create/button/?url=%2fblog%2fdeferred_maintenance%2f&amp;description=Deferred%20Maintenance%20is%20a%20better%20metaphor%20than%20Technical%20Debt" target="_blank" class="share-btn pinterest">
+  <a href="//www.pinterest.com/pin/create/button/?url=%2fblog%2fno_template%2f&amp;description=Replacing%20T4%20Templates%20with%20plain%20C%23%2011" target="_blank" class="share-btn pinterest">
     <i class="fa fa-pinterest-p"></i>
     <p>Pinterest</p>
   </a>
@@ -482,7 +585,7 @@
 
 
 <li>
-  <a href="mailto:?subject=Check out this post by Edwin%20Young&amp;body=%2fblog%2fdeferred_maintenance%2f" target="_blank" class="share-btn email">
+  <a href="mailto:?subject=Check out this post by Edwin%20Young&amp;body=%2fblog%2fno_template%2f" target="_blank" class="share-btn email">
     <i class="fa fa-envelope"></i>
     <p>Email</p>
   </a>
@@ -604,6 +707,20 @@
           <article class="mini-post">
             <header>
               <h3>
+                <a href="/blog/no_template/">Replacing T4 Templates with plain C# 11</a>
+              </h3>
+              
+              <time class="published" datetime='2022-05-28'>
+                May 28, 2022
+              </time>
+            </header>
+            
+
+          </article>
+        
+          <article class="mini-post">
+            <header>
+              <h3>
                 <a href="/blog/deferred_maintenance/">Deferred Maintenance is a better metaphor than Technical Debt</a>
               </h3>
               
@@ -651,20 +768,6 @@
               
               <time class="published" datetime='2022-01-08'>
                 January 8, 2022
-              </time>
-            </header>
-            
-
-          </article>
-        
-          <article class="mini-post">
-            <header>
-              <h3>
-                <a href="/blog/vars/">Some environment vars in Cloud Shell</a>
-              </h3>
-              
-              <time class="published" datetime='2021-10-12'>
-                October 12, 2021
               </time>
             </header>
             
@@ -791,6 +894,17 @@
           <article>
             <header>
               
+                <a href="/categories/c/">c#</a>
+                <span style="float:right;">1</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
                 <a href="/categories/software/">software</a>
                 <span style="float:right;">1</span>
               
@@ -803,6 +917,28 @@
             <header>
               
                 <a href="/categories/softwareengineering/">softwareengineering</a>
+                <span style="float:right;">1</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/t4/">t4</a>
+                <span style="float:right;">1</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/template/">template</a>
                 <span style="float:right;">1</span>
               
             </header>

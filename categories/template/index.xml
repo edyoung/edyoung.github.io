@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Template on Edwin Young</title>
+    <link>/categories/template/</link>
+    <description>Recent content in Template on Edwin Young</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 28 May 2022 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/categories/template/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Replacing T4 Templates with plain C# 11</title>
+      <link>/blog/no_template/</link>
+      <pubDate>Sat, 28 May 2022 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/no_template/</guid>
+      <description>Replacing T4 Templates with plain C# 11 Generating files with T4 In Arc-Enabled Servers we have a quite a lot of different config files which need to be mostly the same, but a little different for each region we deploy into. For example, we have values that are used by Helm charts for each region:
+Australia East configmap: Environment: Prod Location: &amp;quot;australiaeast&amp;quot; CloudEnvironment: &amp;quot;Public&amp;quot; UseKeyVault: true ... Brazil South configmap: Environment: Prod Location: &amp;quot;brazilsouth&amp;quot; CloudEnvironment: &amp;quot;Public&amp;quot; UseKeyVault: true .</description>
+    </item>
+    
+  </channel>
+</rss>
